@@ -18,9 +18,9 @@ class Batterij:
         return self.__huizen
 
     def set_huis(self, huis):
-        self.__huizen += huis
+        self.__huizen.append(huis)
 
     # toString()
     def __str__(self):
-        return f'Locatie: ${self.__locatie}, Capaciteit: ${self.__capaciteit}, Huizen: ${self.__huizen}'
+        return f'Locatie: {self.__locatie}, Capaciteit: {self.__capaciteit}, Huizen: {self.__huizen}'
 
