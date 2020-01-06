@@ -1,5 +1,7 @@
 # Importeer libraries
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from matplotlib.offsetbox import TextArea, DrawingArea, AnnotationBbox, OffsetImage
 import numpy as np
 
 # Functie die de grid gaat tekenen
@@ -22,6 +24,15 @@ def draw():
     # Maak een grid van deze multidimensional array
     ax.grid(which='major', alpha=10, linewidth=2)
     ax.grid(which='minor', alpha=1)
+
+    # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
+    # Fotos toevoegen
+    photo_house = mpimg.imread('../images/huis_mini_mini.png')
+    imagebox = OffsetImage(photo_house, zoom=1)
+    addition_photo = AnnotationBbox(imagebox, (10, 30), frameon=False)
+    ax.add_artist(addition_photo)
+    plt.draw()
+    plt.savefig('add_picture_matplotlib_figure.png',bbox_inches='tight', transparent=True)
 
     # Toon de plot
     plt.show()
