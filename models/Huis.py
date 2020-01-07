@@ -18,8 +18,8 @@ class Huis:
         return self.__kabels
 
     def set_kabels(self, kabel):
-        self.__kabels += kabel
+        self.__kabels.append(kabel)
 
     # toString()
     def __str__(self):
-        return f'Locatie: ${self.__locatie}, Output: ${self.__output}, Kabels: ${self.__kabels}'
+        return f'Locatie: {self.__locatie}, Output: {self.__output}, Kabels: {self.__kabels}'
