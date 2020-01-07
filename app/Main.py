@@ -31,6 +31,7 @@ def draw():
     ax.grid(which='minor', alpha=1)
 
     # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
+    # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
     # Fotos toevoegen
     photo_house = mpimg.imread('../images/huis_mini_mini.png')
     imagebox = OffsetImage(photo_house, zoom=1)
