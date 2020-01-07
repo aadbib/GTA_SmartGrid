@@ -173,6 +173,7 @@ def main():
     for huis in huizen:
         batterij = find_battery(objecten["batterijen"], huis)
         lay_cable(huis, batterij)
+        batterij.set_huis(huis)
 
     # Roep draw aan
     draw(wijk)
