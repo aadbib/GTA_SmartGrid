@@ -92,7 +92,7 @@ def main():
 
     # Moet argument wijk meegeven
     if len(sys.argv) != 2:
-        print("Usage: python main.py <wijk>")
+        print("Usage: python main.py <wijk_nummer>")
         exit(1)
 
     wijk = str(sys.argv[1])
