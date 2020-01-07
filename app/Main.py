@@ -16,12 +16,63 @@ sys.path.append(root_path)
 from models.Batterij import Batterij
 from models.Huis import Huis
 
+# Todo: Functie schrijven van afstand huis - batterij
+# def distance(huis, batterij):
+
+
+#Todo: vind optimale batterij, criteria: capaciteit & afstand
+def find_battery(batterijen, huis):
+    output_huis = huis.get_output()
+
+    for batterij in batterijen:
+        resterend = batterij.get_resterend()
+
+        if resterend >= output_huis:
+            return batterij
+
+
+        # distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
+        # distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
+
+
+
+#Todo: Let op x en y van andere batterijen, no crossing
+def lay_cable(huis, batterij):
+
+    distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
+    distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
+    huis_y = int(huis.get_locatie()[1])
+    huis_x = int(huis.get_locatie()[0])
+    batterij_y = int(batterij.get_locatie()[1])
+
+    if distance_y > 0:
+
+        for movement in range(abs(distance_y)):
+            huis.set_kabels((huis_x, huis_y + movement))
+    else:
+
+        for movement in range(abs(distance_y)):
+            huis.set_kabels((huis_x, huis_y - movement))
+
+    if distance_x > 0:
+
+        for movement in range(abs(distance_x) + 1):
+            huis.set_kabels((huis_x + movement, batterij_y))
+    else:
+
+        for movement in range(abs(distance_x) + 1):
+            huis.set_kabels((huis_x - movement, batterij_y))
+
+
 # Functie: tekent grid
 def draw(wijk):
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
 
     # Laadt alle objecten in de wijk
     objects = load_objects(wijk)
+
+    # # Leg alle kabels tussen huizen en batterijen
+    # lay_cables(objects)
 
     # Creer een figure en daarin een plot
     fig = plt.figure()
@@ -54,9 +105,8 @@ def draw(wijk):
         ax.add_artist(addition_photo)
 
     for batterij in objects['batterijen']:
-        batterij_locatie = batterij.get_locatie().replace('[', '').replace(']', '').split(',')
-        batterij_x = int(batterij_locatie[0])
-        batterij_y = int(batterij_locatie[1])
+        batterij_x = int(batterij.get_locatie()[0])
+        batterij_y = int(batterij.get_locatie()[1])
 
         photo_battery = mpimg.imread('../images/batterij_mini_mini.png')
         imagebox2 = OffsetImage(photo_battery, zoom=1)
@@ -116,6 +166,13 @@ def main():
     if wijk not in ['1', '2', '3']:
         print("No such wijk!")
         exit(1)
+
+    objecten = load_objects(wijk)
+    huizen = objecten["huizen"]
+
+    for huis in huizen:
+        batterij = find_battery(objecten["batterijen"], huis)
+        lay_cable(huis, batterij)
 
     # Roep draw aan
     draw(wijk)

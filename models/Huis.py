@@ -4,7 +4,7 @@ class Huis:
     # Constructor & attributen
     def __init__(self, loc, out):
         self.__locatie = loc
-        self.__output = out
+        self.__output = float(out)
         self.__kabels = []
 
     # Getters & Setters
