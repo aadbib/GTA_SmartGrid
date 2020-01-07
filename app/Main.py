@@ -8,7 +8,7 @@ import sys
 import os
 
 # Zet root-pad goed om de modules vanaf CLI te laden
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 root_path = os.path.dirname(os.getcwd())
 sys.path.append(root_path)
 
