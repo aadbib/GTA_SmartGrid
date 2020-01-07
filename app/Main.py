@@ -35,8 +35,6 @@ def find_battery(batterijen, huis):
         # distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
         # distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
 
-
-
 #Todo: Let op x en y van andere batterijen, no crossing
 def lay_cable(huis, batterij):
 
@@ -72,8 +70,9 @@ def draw(wijk):
     # Laadt alle objecten in de wijk
     objects = load_objects(wijk)
 
-    # # Leg alle kabels tussen huizen en batterijen
-    # lay_cables(objects)
+    # Stop huizen en batterijen in variabelen
+    huizen = objects["huizen"]
+    batterijen = objects["batterijen"]
 
     # Creer een figure en daarin een plot
     fig = plt.figure()
@@ -93,14 +92,10 @@ def draw(wijk):
     ax.grid(which='major', alpha=10, linewidth=2)
     ax.grid(which='minor', alpha=1)
 
-    # https://stackoverflow.com/questions/36470343/how-to-draw-a-line-with-matplotlib
-    x1, y1 = [20, 20], [21, 20]
-    ax.add_line(mlines.Line2D(x1, y1))
-
     # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
     # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
     # Fotos toevoegen
-    for huis in objects['huizen']:
+    for huis in huizen:
         huis_x = int(huis.get_locatie()[0])
         huis_y = int(huis.get_locatie()[1])
 
@@ -109,7 +104,23 @@ def draw(wijk):
         addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
         ax.add_artist(addition_photo)
 
-    for batterij in objects['batterijen']:
+        kabels = huis.get_kabels()
+        for index, kabel in enumerate(kabels):
+            try:
+                # https://stackoverflow.com/questions/36470343/how-to-draw-a-line-with-matplotlib
+                #           x1, x2    y1, y2
+                # x1, y1 = [20, 20], [21, 20]
+                # x2, y2 = [22, 20], [21, 20]
+
+                kabel1, kabel2 = list(kabel), list(kabels[index + 1])
+                x1, y1 = [kabel1[0], kabel2[0]], [kabel1[1], kabel2[1]]
+
+                ax.add_line(mlines.Line2D(x1, y1))
+
+            except IndexError:
+                pass
+
+    for batterij in batterijen:
         batterij_x = int(batterij.get_locatie()[0])
         batterij_y = int(batterij.get_locatie()[1])
 
@@ -130,7 +141,6 @@ def load_objects(wijk):
 
     huizen_wijk = open(f'../data/wijk{wijk}_huizen.csv')
     batterijen_wijk = open(f'../data/wijk{wijk}_batterijen.csv')
-
     reader = csv.reader(huizen_wijk)
 
     # Skip eerste regel
@@ -142,7 +152,6 @@ def load_objects(wijk):
         objects["huizen"].append(huis)
 
     huizen_wijk.close()
-
     reader = csv.reader(batterijen_wijk)
 
     # Skip eerste regel
@@ -154,6 +163,16 @@ def load_objects(wijk):
         objects["batterijen"].append(batterij)
 
     batterijen_wijk.close()
+
+    # Stop huizen en batterijen in variabelen
+    huizen = objects["huizen"]
+    batterijen = objects["batterijen"]
+
+    # Leg alle kabels tussen huizen en batterijen
+    for huis in huizen:
+        batterij = find_battery(batterijen, huis)
+        lay_cable(huis, batterij)
+        batterij.set_huis(huis)
 
     return objects
 
@@ -171,14 +190,6 @@ def main():
     if wijk not in ['1', '2', '3']:
         print("No such wijk!")
         exit(1)
-
-    objecten = load_objects(wijk)
-    huizen = objecten["huizen"]
-
-    for huis in huizen:
-        batterij = find_battery(objecten["batterijen"], huis)
-        lay_cable(huis, batterij)
-        batterij.set_huis(huis)
 
     # Roep draw aan
     draw(wijk)
