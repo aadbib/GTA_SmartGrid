@@ -44,11 +44,20 @@ def draw(wijk):
     # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
     # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
     # Fotos toevoegen
-    photo_house = mpimg.imread('../images/huis_mini_mini.png')
-    imagebox = OffsetImage(photo_house, zoom=1)
-    addition_photo = AnnotationBbox(imagebox, (10, 30), frameon=False)
-    ax.add_artist(addition_photo)
-    plt.draw()
+    for huis in objects['huizen']:
+        huis_locatie = huis.get_locatie()
+        photo_house = mpimg.imread('../images/huis_mini_mini.png')
+        imagebox = OffsetImage(photo_house, zoom=1)
+        addition_photo = AnnotationBbox(imagebox, (int(huis_locatie[0]), int(huis_locatie[1])), frameon=False)
+        ax.add_artist(addition_photo)
+
+    for batterij in objects['batterijen']:
+        batterij_locatie = batterij.get_locatie().replace('[', '').replace(']', '').split(',')
+        photo_battery = mpimg.imread('../images/batterij_mini_mini.png')
+        imagebox2 = OffsetImage(photo_battery, zoom=1)
+        addition_photo2 = AnnotationBbox(imagebox2, (int(batterij_locatie[0]), int(batterij_locatie[1])), frameon=False)
+        ax.add_artist(addition_photo2)
+
     plt.savefig(f'{root_path}/images/add_picture_matplotlib_figure.png',bbox_inches='tight', transparent=True)
 
     # Toon de plot
