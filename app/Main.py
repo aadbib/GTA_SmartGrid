@@ -1,6 +1,7 @@
 # Importeer libraries
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import matplotlib.lines as mlines
 from matplotlib.offsetbox import TextArea, DrawingArea, AnnotationBbox, OffsetImage
 import numpy as np
 import csv
@@ -91,6 +92,10 @@ def draw(wijk):
     # Maak een grid van deze multidimensional array
     ax.grid(which='major', alpha=10, linewidth=2)
     ax.grid(which='minor', alpha=1)
+
+    # https://stackoverflow.com/questions/36470343/how-to-draw-a-line-with-matplotlib
+    x1, y1 = [20, 20], [21, 20]
+    ax.add_line(mlines.Line2D(x1, y1))
 
     # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
     # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
