@@ -45,17 +45,22 @@ def draw(wijk):
     # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
     # Fotos toevoegen
     for huis in objects['huizen']:
-        huis_locatie = huis.get_locatie()
+        huis_x = int(huis.get_locatie()[0])
+        huis_y = int(huis.get_locatie()[1])
+
         photo_house = mpimg.imread('../images/huis_mini_mini.png')
         imagebox = OffsetImage(photo_house, zoom=1)
-        addition_photo = AnnotationBbox(imagebox, (int(huis_locatie[0]), int(huis_locatie[1])), frameon=False)
+        addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
         ax.add_artist(addition_photo)
 
     for batterij in objects['batterijen']:
         batterij_locatie = batterij.get_locatie().replace('[', '').replace(']', '').split(',')
+        batterij_x = int(batterij_locatie[0])
+        batterij_y = int(batterij_locatie[1])
+
         photo_battery = mpimg.imread('../images/batterij_mini_mini.png')
         imagebox2 = OffsetImage(photo_battery, zoom=1)
-        addition_photo2 = AnnotationBbox(imagebox2, (int(batterij_locatie[0]), int(batterij_locatie[1])), frameon=False)
+        addition_photo2 = AnnotationBbox(imagebox2, (batterij_x, batterij_y), frameon=False)
         ax.add_artist(addition_photo2)
 
     plt.savefig(f'{root_path}/images/add_picture_matplotlib_figure.png',bbox_inches='tight', transparent=True)
