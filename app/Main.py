@@ -18,26 +18,45 @@ from models.Batterij import Batterij
 from models.Huis import Huis
 
 # Todo: Functie schrijven van afstand huis - batterij
-# def distance(huis, batterij):
+def distance(huis, batterij):
+    distance_y = abs(int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1]))
+    distance_x = abs(int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0]))
 
+    return distance_x + distance_y
+
+
+def totale_prijs(batterijen):
+    eind_prijs = 0
+
+    for batterij in batterijen:
+        eind_prijs += batterij.total_price()
+
+    return eind_prijs
 
 #Todo: vind optimale batterij, criteria: capaciteit & afstand
 def find_battery(batterijen, huis):
     output_huis = huis.get_output()
+    optimale_index = 0
+    min_afstand = 100
 
-    for batterij in batterijen:
-        resterend = batterij.get_resterend()
+    for index, batterij in enumerate(batterijen):
+        try:
+            afstand_batterij = distance(huis, batterij)
 
-        if resterend >= output_huis:
-            return batterij
+            if afstand_batterij < min_afstand:
+                resterend = batterij.get_resterend()
 
+                if resterend >= output_huis:
+                    optimale_index = index
+                    min_afstand = afstand_batterij
 
-        # distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
-        # distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
+        except IndexError:
+            pass
+
+    return batterijen[optimale_index]
 
 #Todo: Let op x en y van andere batterijen, no crossing
 def lay_cable(huis, batterij):
-
     distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
     distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
     huis_y = int(huis.get_locatie()[1])
@@ -74,13 +93,17 @@ def draw(wijk):
     huizen = objects["huizen"]
     batterijen = objects["batterijen"]
 
-    # Creer een figure en daarin een plot
+    eind_prijs = totale_prijs(batterijen)
+
+    print(f'Totale prijs: {eind_prijs}')
+
+    # Creëer een figure en daarin een plot
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
 
     # Arrays die de definitie van de lijnen vormen
-    grote_lijnen = np.arange(0, 51, 10)
-    kleine_lijnen = np.arange(0, 51, 1)
+    grote_lijnen = np.arange(0, 52, 10)
+    kleine_lijnen = np.arange(0, 52, 1)
 
     # Zet deze arrays als x en y coordinaten
     ax.set_xticks(grote_lijnen)
@@ -115,7 +138,9 @@ def draw(wijk):
                 kabel1, kabel2 = list(kabel), list(kabels[index + 1])
                 x1, y1 = [kabel1[0], kabel2[0]], [kabel1[1], kabel2[1]]
 
-                ax.add_line(mlines.Line2D(x1, y1))
+                line = ax.add_line(mlines.Line2D(x1, y1))
+
+                line.set_color("magenta")
 
             except IndexError:
                 pass

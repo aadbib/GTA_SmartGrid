@@ -1,6 +1,8 @@
 # Model voor Batterij
 class Batterij:
 
+    batterij_prijs = 5000
+
     # Constructor & attributen
     def __init__(self, loc, cap):
         self.__locatie = loc.replace('[', '').replace(']', '').split(',')
@@ -27,6 +29,16 @@ class Batterij:
             aangesloten += huis.get_output()
 
         return self.__capaciteit - aangesloten
+
+    def total_price(self):
+        totale_prijs = 0
+
+        for huis in self.__huizen:
+            totale_prijs += huis.bereken_prijs_kabels()
+
+        totale_prijs += Batterij.batterij_prijs
+
+        return totale_prijs
 
     # toString()
     def __str__(self):
