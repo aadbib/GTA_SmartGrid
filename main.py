@@ -11,13 +11,6 @@ import sys
 from models.Batterij import Batterij
 from models.Huis import Huis
 
-# Todo: Functie schrijven van afstand huis - batterij
-def distance(huis, batterij):
-    distance_y = abs(int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1]))
-    distance_x = abs(int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0]))
-
-    return distance_x + distance_y
-
 def totale_prijs(batterijen):
     eind_prijs = 0
 
@@ -25,57 +18,6 @@ def totale_prijs(batterijen):
         eind_prijs += batterij.total_price()
 
     return eind_prijs
-
-#Todo: vind optimale batterij, criteria: capaciteit & afstand
-#Todo: Random functie zodat een random oplossing gemaakt wordt
-#Todo: Upper en lower bound definieren
-def find_battery(batterijen, huis):
-    output_huis = huis.get_output()
-    optimale_index = 0
-    min_afstand = 100
-
-    for index, batterij in enumerate(batterijen):
-        try:
-            afstand_batterij = distance(huis, batterij)
-
-            if afstand_batterij < min_afstand:
-                resterend = batterij.get_resterend()
-
-                if resterend >= output_huis:
-                    optimale_index = index
-                    min_afstand = afstand_batterij
-
-        except IndexError:
-            pass
-
-    return batterijen[optimale_index]
-
-#Todo: Let op x en y van andere batterijen, no crossing
-def lay_cable(huis, batterij):
-    distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
-    distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
-    huis_y = int(huis.get_locatie()[1])
-    huis_x = int(huis.get_locatie()[0])
-    batterij_y = int(batterij.get_locatie()[1])
-
-    if distance_y > 0:
-
-        for movement in range(abs(distance_y)):
-            huis.set_kabels((huis_x, huis_y + movement))
-    else:
-
-        for movement in range(abs(distance_y)):
-            huis.set_kabels((huis_x, huis_y - movement))
-
-    if distance_x > 0:
-
-        for movement in range(abs(distance_x) + 1):
-            huis.set_kabels((huis_x + movement, batterij_y))
-    else:
-
-        for movement in range(abs(distance_x) + 1):
-            huis.set_kabels((huis_x - movement, batterij_y))
-
 
 # Functie: tekent grid
 def draw(wijk):
@@ -126,6 +68,8 @@ def draw(wijk):
         huizen = batterij.get_huizen()
         kleuren = ["cyan", "magenta", "green", "yellow", "red"]
 
+        print(f"Batterij: {batterij.get_resterend()}")
+
         for huis in huizen:
             huis_x = int(huis.get_locatie()[0])
             huis_y = int(huis.get_locatie()[1])
@@ -134,6 +78,8 @@ def draw(wijk):
             imagebox = OffsetImage(photo_house, zoom=1)
             addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
             ax.add_artist(addition_photo)
+
+            print(f"Huis: {huis.get_output()}")
 
             kabels = huis.get_kabels()
             for index, kabel in enumerate(kabels):
@@ -193,9 +139,8 @@ def load_objects(wijk):
 
     # Leg alle kabels tussen huizen en batterijen
     for huis in huizen:
-        batterij = find_battery(batterijen, huis)
-        lay_cable(huis, batterij)
-        batterij.set_huis(huis)
+        batterij = huis.find_battery(batterijen)
+        batterij.lay_cable(huis)
 
     return objects
 
