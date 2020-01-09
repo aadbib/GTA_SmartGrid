@@ -27,8 +27,8 @@ class Huis:
 
     # Todo: Functie schrijven van afstand huis - batterij
     def distance(self, batterij):
-        distance_y = abs(int(batterij.get_locatie()[1]) - int(self.get_locatie()[1]))
-        distance_x = abs(int(batterij.get_locatie()[0]) - int(self.get_locatie()[0]))
+        distance_y = abs(int(batterij.get_locatie()[1]) - int(self.__locatie[1]))
+        distance_x = abs(int(batterij.get_locatie()[0]) - int(self.__locatie[0]))
 
         return distance_x + distance_y
 
@@ -36,7 +36,7 @@ class Huis:
     # Todo: Random functie zodat een random oplossing gemaakt wordt
     # Todo: Upper en lower bound definieren
     def find_battery(self, batterijen):
-        output_huis = self.get_output()
+        output_huis = self.__output
         optimale_index = 0
         min_afstand = 100
 
