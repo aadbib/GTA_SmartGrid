@@ -84,8 +84,7 @@ def draw(wijk):
     # Laadt alle objecten in de wijk
     objects = load_objects(wijk)
 
-    # Stop huizen en batterijen in variabelen
-    # huizen = objects["huizen"]
+    # Stop batterijen in variabele
     batterijen = objects["batterijen"]
 
     eind_prijs = totale_prijs(batterijen)
