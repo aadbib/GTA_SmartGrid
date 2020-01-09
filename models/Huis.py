@@ -1,10 +1,12 @@
 # Model voor Huis
 class Huis:
 
+    prijs_kabel = 9
+
     # Constructor & attributen
     def __init__(self, loc, out):
         self.__locatie = loc
-        self.__output = out
+        self.__output = float(out)
         self.__kabels = []
 
     # Getters & Setters
@@ -19,6 +21,9 @@ class Huis:
 
     def set_kabels(self, kabel):
         self.__kabels.append(kabel)
+
+    def bereken_prijs_kabels(self):
+        return (len(self.get_kabels()) - 1) * Huis.prijs_kabel
 
     # toString()
     def __str__(self):
