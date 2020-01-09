@@ -5,7 +5,7 @@ class Batterij:
 
     # Constructor & attributen
     def __init__(self, loc, cap):
-        self.__locatie = loc.replace('[', '').replace(']', '').split(',')
+        self.__locatie = loc.replace('[', '').replace(']', '').replace(' ', '').split(',')
         self.__capaciteit = float(cap)
         self.__huizen = []
 
