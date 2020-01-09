@@ -5,7 +5,7 @@ class Huis:
 
     # Constructor & attributen
     def __init__(self, loc, out):
-        self.__locatie = loc
+        self.__locatie = tuple(loc.split(', '))
         self.__output = float(out)
         self.__kabels = []
 

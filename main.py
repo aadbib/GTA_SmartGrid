@@ -11,6 +11,7 @@ import sys
 from models.Batterij import Batterij
 from models.Huis import Huis
 
+# Functie: Bereken absolute totale prijs grid
 def totale_prijs(batterijen):
     eind_prijs = 0
 
@@ -74,8 +75,6 @@ def draw(wijk):
         huizen = batterij.get_huizen()
         kleuren = ["cyan", "magenta", "green", "yellow", "red"]
 
-        # print(f"Batterij: {batterij.get_resterend()}")
-
         for huis in huizen:
             huis_x = int(huis.get_locatie()[0])
             huis_y = int(huis.get_locatie()[1])
@@ -84,8 +83,6 @@ def draw(wijk):
             imagebox = OffsetImage(photo_house, zoom=1)
             addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
             ax.add_artist(addition_photo)
-
-            # print(f"Huis: {huis.get_output()}")
 
             kabels = huis.get_kabels()
             for index, kabel in enumerate(kabels):
@@ -109,8 +106,6 @@ def draw(wijk):
                     line = ax.add_line(mlines.Line2D(x1, y1))
                     line.set_color(kleuren[batterij_index])
 
-                    # line.set_dashes(dashes[kleuren[batterij_index]])
-
                 except IndexError:
                     pass
 
@@ -132,7 +127,7 @@ def load_objects(wijk):
 
     # Loop door csv-reader, maak huis-objecten aan
     for line in reader:
-        huis = Huis((line['x'], line[' y']), line[' max output'])
+        huis = Huis(f"{line['x']},{line[' y']}", line[' max output'])
         objects["huizen"].append(huis)
 
     huizen_wijk.close()
