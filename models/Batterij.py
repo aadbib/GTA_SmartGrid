@@ -20,7 +20,8 @@ class Batterij:
         return self.__huizen
 
     def set_huis(self, huis):
-        self.__huizen.append(huis)
+        if huis not in self.__huizen:
+            self.__huizen.append(huis)
 
     def get_resterend(self):
         aangesloten = 0
