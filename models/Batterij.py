@@ -5,7 +5,7 @@ class Batterij:
 
     # Constructor & attributen
     def __init__(self, loc, cap):
-        self.__locatie = loc.replace('[', '').replace(']', '').split(',')
+        self.__locatie = loc.replace('[', '').replace(']', '').replace(' ', '').split(',')
         self.__capaciteit = float(cap)
         self.__huizen = []
 
@@ -44,11 +44,11 @@ class Batterij:
     # Leg alle kabels tussen huizen en batterijen
     # Todo: Let op x en y van andere batterijen, no crossing
     def lay_cable(self, huis):
-        distance_y = int(self.get_locatie()[1]) - int(huis.get_locatie()[1])
-        distance_x = int(self.get_locatie()[0]) - int(huis.get_locatie()[0])
+        distance_y = int(self.__locatie[1]) - int(huis.get_locatie()[1])
+        distance_x = int(self.__locatie[0]) - int(huis.get_locatie()[0])
         huis_y = int(huis.get_locatie()[1])
         huis_x = int(huis.get_locatie()[0])
-        batterij_y = int(self.get_locatie()[1])
+        batterij_y = int(self.__locatie[1])
 
         if distance_y > 0:
 

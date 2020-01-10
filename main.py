@@ -11,6 +11,7 @@ import sys
 from models.Batterij import Batterij
 from models.Huis import Huis
 
+# Functie: Bereken absolute totale prijs grid
 def totale_prijs(batterijen):
     eind_prijs = 0
 
@@ -22,6 +23,12 @@ def totale_prijs(batterijen):
 # Functie: tekent grid
 def draw(wijk):
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
+
+    # Variabelen die de grid definiëren
+    grote_stappen = 10
+    kleine_stappen = 1
+    begin_as = -1
+    eind_as = 52
 
     # Laadt alle objecten in de wijk
     objects = load_objects(wijk)
@@ -35,16 +42,16 @@ def draw(wijk):
 
     # Creëer een figure en daarin een plot
     fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
+    ax = fig.add_subplot(kleine_stappen, kleine_stappen, kleine_stappen)
 
     # Arrays die de definitie van de lijnen vormen
-    grote_lijnen = np.arange(-1, 52, 10)
-    kleine_lijnen = np.arange(-1, 52, 1)
+    grote_lijnen = np.arange(begin_as, eind_as, grote_stappen)
+    kleine_lijnen = np.arange(begin_as, eind_as, kleine_stappen)
 
-    # Zet deze arrays als x en y coordinaten, tweede argument zorgt dat labels 0 ipv -1
-    ax.set_xticks(grote_lijnen, 1)
+    # Zet deze arrays als x en y coordinaten, tweede argument zorgt dat labels 0 ipv -1 wordt
+    ax.set_xticks(grote_lijnen, kleine_stappen)
     ax.set_xticks(kleine_lijnen, minor=True)
-    ax.set_yticks(grote_lijnen, 1)
+    ax.set_yticks(grote_lijnen, kleine_stappen)
     ax.set_yticks(kleine_lijnen, minor=True)
 
     # Maak een grid van deze multidimensional array
@@ -68,8 +75,6 @@ def draw(wijk):
         huizen = batterij.get_huizen()
         kleuren = ["cyan", "magenta", "green", "yellow", "red"]
 
-        print(f"Batterij: {batterij.get_resterend()}")
-
         for huis in huizen:
             huis_x = int(huis.get_locatie()[0])
             huis_y = int(huis.get_locatie()[1])
@@ -78,8 +83,6 @@ def draw(wijk):
             imagebox = OffsetImage(photo_house, zoom=1)
             addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
             ax.add_artist(addition_photo)
-
-            print(f"Huis: {huis.get_output()}")
 
             kabels = huis.get_kabels()
             for index, kabel in enumerate(kabels):
@@ -91,13 +94,17 @@ def draw(wijk):
 
                     kabel1, kabel2 = list(kabel), list(kabels[index + 1])
                     dashes = {"red":-0.1, "yellow":-0.05, "green":0, "cyan":0.05, "magenta":0.1}
-                    x1, y1 = [kabel1[0] + dashes[kleuren[batterij_index]], kabel2[0] + dashes[kleuren[batterij_index]] ], [kabel1[1] + dashes[kleuren[batterij_index]], kabel2[1] + dashes[kleuren[batterij_index]]]
+                    x1, y1 = [
+                                kabel1[0] + dashes[kleuren[batterij_index]],
+                                kabel2[0] + dashes[kleuren[batterij_index]]
+                             ],\
+                             [
+                                 kabel1[1] + dashes[kleuren[batterij_index]],
+                                 kabel2[1] + dashes[kleuren[batterij_index]]
+                             ]
 
                     line = ax.add_line(mlines.Line2D(x1, y1))
-
                     line.set_color(kleuren[batterij_index])
-
-                    # line.set_dashes(dashes[kleuren[batterij_index]])
 
                 except IndexError:
                     pass
@@ -120,7 +127,7 @@ def load_objects(wijk):
 
     # Loop door csv-reader, maak huis-objecten aan
     for line in reader:
-        huis = Huis((line['x'], line[' y']), line[' max output'])
+        huis = Huis(f"{line['x']},{line[' y']}", line[' max output'])
         objects["huizen"].append(huis)
 
     huizen_wijk.close()
