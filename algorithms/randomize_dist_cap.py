@@ -10,15 +10,13 @@ def randomize_objects(huizen, batterijen):
     shuffle(huizen)
     shuffle(batterijen)
 
-def find_battery(grid, huis):
+def find_battery(batterijen, huis):
     """
     Zoekt het dichtstbijzijndste batterij voor een gegeven huis
     """
     optimale_index = 0
     min_afstand = 100
     output_huis = huis.get_output()
-
-    batterijen = grid.get_batterijen()
 
     for index, batterij in enumerate(batterijen):
         try:
@@ -36,7 +34,7 @@ def find_battery(grid, huis):
 
     return batterijen[optimale_index]
 
-def lay_cables(grid):
+def dist_cap_algorithm(grid):
     """
     Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit
     """
@@ -46,7 +44,7 @@ def lay_cables(grid):
     randomize_objects(huizen, batterijen)
 
     for huis in huizen:
-        batterij = find_battery(grid, huis)
+        batterij = find_battery(batterijen, huis)
 
         distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
         distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
