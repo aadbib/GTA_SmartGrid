@@ -24,12 +24,16 @@ def main():
 
     grid = Grid(wijk, f"data/wijk{wijk}_huizen.csv", f"data/wijk{wijk}_batterijen.csv")
 
-    # Roep draw aan
+    # Voer algoritme op grid uit
+    lay_cables(grid)
+
+    # Teken grid
     draw(grid)
 
     # Algoritme run-time test om de beste kosten en run-time in 10k pogingen te vinden
     # beste_prijs = 100000
-
+    #
+    # start_time = time.time()
     # for poging in range(10000):
     #     grid = Grid(wijk, f"data/wijk{wijk}_huizen.csv", f"data/wijk{wijk}_batterijen.csv")
     #     lay_cables(grid)
@@ -40,8 +44,7 @@ def main():
     #         beste_prijs = eind_prijs
     #
     # print(beste_prijs)
+    # print("--- %s seconds runtime ---" % (time.time() - start_time))
 
 if __name__=="__main__":
-    start_time = time.time()
     main()
-    print("--- %s seconds runtime ---" % (time.time() - start_time))

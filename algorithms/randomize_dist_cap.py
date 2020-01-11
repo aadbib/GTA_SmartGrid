@@ -3,12 +3,12 @@ from random import shuffle
 
 # Todo: Upper en lower bound definieren
 
-def randomize_objects(grid):
+def randomize_objects(huizen, batterijen):
     """
     Schud de batterijen en huizen in de grid, om de volgorde te randomizen
     """
-    shuffle(grid.get_batterijen())
-    shuffle(grid.get_huizen())
+    shuffle(huizen)
+    shuffle(batterijen)
 
 def find_battery(grid, huis):
     """
@@ -43,8 +43,7 @@ def lay_cables(grid):
     huizen = grid.get_huizen()
     batterijen = grid.get_batterijen()
 
-    shuffle(huizen)
-    shuffle(batterijen)
+    randomize_objects(huizen, batterijen)
 
     for huis in huizen:
         batterij = find_battery(grid, huis)
