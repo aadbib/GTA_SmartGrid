@@ -41,35 +41,6 @@ class Batterij:
 
         return totale_prijs
 
-    # Leg alle kabels tussen huizen en batterijen
-    # Todo: Let op x en y van andere batterijen, no crossing
-    def lay_cable(self, huis):
-        distance_y = int(self.__locatie[1]) - int(huis.get_locatie()[1])
-        distance_x = int(self.__locatie[0]) - int(huis.get_locatie()[0])
-        huis_y = int(huis.get_locatie()[1])
-        huis_x = int(huis.get_locatie()[0])
-        batterij_y = int(self.__locatie[1])
-
-        if distance_y > 0:
-
-            for movement in range(abs(distance_y)):
-                huis.set_kabels((huis_x, huis_y + movement))
-        else:
-
-            for movement in range(abs(distance_y)):
-                huis.set_kabels((huis_x, huis_y - movement))
-
-        if distance_x > 0:
-
-            for movement in range(abs(distance_x) + 1):
-                huis.set_kabels((huis_x + movement, batterij_y))
-        else:
-
-            for movement in range(abs(distance_x) + 1):
-                huis.set_kabels((huis_x - movement, batterij_y))
-
-        self.set_huis(huis)
-
     # toString()
     def __str__(self):
         return f'Locatie: {self.__locatie}, Capaciteit: {self.__capaciteit}, Huizen: {self.__huizen}, Resterend: {self.get_resterend()}'
