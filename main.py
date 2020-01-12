@@ -1,18 +1,18 @@
 # Importeer libraries
 import sys
-import time
 
-# Importeer grid, algoritme en visualisatie
+# Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
+from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
 from visualisation.plot_grid import draw
 
 # Main functie
 def main():
 
     # Moet argument wijk meegeven
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("Usage: python main.py <wijk_nummer> <pogingen>")
+    if len(sys.argv) != 2:
+        print("Usage: python main.py <wijk_nummer>")
         exit(1)
 
     wijk = str(sys.argv[1])
@@ -22,16 +22,6 @@ def main():
         print("No such wijk!")
         exit(1)
 
-    # if len(sys.argv) > 2:
-    #     try:
-    #         pogingen = int(sys.argv[2])
-    #
-    #     except:
-    #         print("You have to give an integer")
-    #         exit(1)
-    # else:
-    #     pogingen = 1
-
     grid = Grid(wijk, f"data/wijk{wijk}_huizen.csv", f"data/wijk{wijk}_batterijen.csv")
 
     # Voer algoritme op grid uit
@@ -39,22 +29,6 @@ def main():
 
     # Teken grid
     draw(grid)
-
-    # Algoritme run-time test om de beste kosten en run-time in 10k pogingen te vinden
-    # beste_prijs = 100000
-    #
-    # print("Running algorithm, please wait...")
-    # start_time = time.time()
-    # for poging in range(pogingen):
-    #     grid = Grid(wijk, f"data/wijk{wijk}_huizen.csv", f"data/wijk{wijk}_batterijen.csv")
-    #     lay_cables(grid)
-    #     eind_prijs = grid.get_totale_prijs()
-    #
-    #     if eind_prijs < beste_prijs:
-    #         beste_prijs = eind_prijs
-    #
-    # print(f"Lowest cost found: {beste_prijs}")
-    # print("--- %s seconds runtime ---" % (time.time() - start_time))
 
 if __name__=="__main__":
     main()

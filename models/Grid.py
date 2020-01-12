@@ -54,3 +54,15 @@ class Grid:
 
     def get_huizen(self):
         return self.__huizen
+
+    def is_everything_connected(self):
+        connected = 0
+
+        for batterij in self.__batterijen:
+            connected += len(batterij.get_huizen())
+
+        return connected == len(self.__huizen)
+
+    def __str__(self):
+        # toString()
+        return f"Grid voor de wijk: {self.__wijk}, Huizen: {self.__huizen}, Batterijen: {self.__batterijen}"

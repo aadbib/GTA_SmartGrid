@@ -1,18 +1,9 @@
-# Importeer shuffle
-from random import shuffle
-
 # Todo: Upper en lower bound definieren
-
-def randomize_objects(huizen, batterijen):
-    """
-    Schud de batterijen en huizen in de grid, om de volgorde te randomizen
-    """
-    shuffle(huizen)
-    shuffle(batterijen)
+from .randomize import randomize_objects
 
 def find_battery(batterijen, huis):
     """
-    Zoekt het dichtstbijzijndste batterij voor een gegeven huis
+    Zoekt het dichtstbijzijndste batterij voor een gegeven huis, waarbij de output in de resterende capaciteit past
     """
     optimale_index = 0
     min_afstand = 100
@@ -36,7 +27,7 @@ def find_battery(batterijen, huis):
 
 def dist_cap_algorithm(grid):
     """
-    Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit
+    Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit, waarbij de output in de capaciteit past
     """
     huizen = grid.get_huizen()
     batterijen = grid.get_batterijen()
@@ -45,29 +36,4 @@ def dist_cap_algorithm(grid):
 
     for huis in huizen:
         batterij = find_battery(batterijen, huis)
-
-        distance_y = int(batterij.get_locatie()[1]) - int(huis.get_locatie()[1])
-        distance_x = int(batterij.get_locatie()[0]) - int(huis.get_locatie()[0])
-        huis_y = int(huis.get_locatie()[1])
-        huis_x = int(huis.get_locatie()[0])
-        batterij_y = int(batterij.get_locatie()[1])
-
-        if distance_y > 0:
-
-            for movement in range(abs(distance_y)):
-                huis.set_kabels((huis_x, huis_y + movement))
-        else:
-
-            for movement in range(abs(distance_y)):
-                huis.set_kabels((huis_x, huis_y - movement))
-
-        if distance_x > 0:
-
-            for movement in range(abs(distance_x) + 1):
-                huis.set_kabels((huis_x + movement, batterij_y))
-        else:
-
-            for movement in range(abs(distance_x) + 1):
-                huis.set_kabels((huis_x - movement, batterij_y))
-
-        batterij.set_huis(huis)
+        batterij.lay_cable(huis)
