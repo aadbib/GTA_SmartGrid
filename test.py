@@ -12,7 +12,7 @@ def main():
 
     # Moet argument wijk en pogingen meegeven
     if len(sys.argv) != 4:
-        print("Usage: python main.py <wijk_nummer> <algorithm> <pogingen>")
+        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen>")
         exit(1)
 
     wijk = str(sys.argv[1])
@@ -57,6 +57,7 @@ def main():
         if eind_prijs < beste_prijs:
             beste_prijs = eind_prijs
 
+    print(grid)
     print(f"Highest cost found: {slechtste_prijs}")
     print(f"Lowest cost found: {beste_prijs}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))

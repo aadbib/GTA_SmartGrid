@@ -65,4 +65,4 @@ class Grid:
 
     def __str__(self):
         # toString()
-        return f"Grid voor de wijk: {self.__wijk}, Huizen: {self.__huizen}, Batterijen: {self.__batterijen}"
+        return f"Grid voor de wijk: {self.__wijk},\nHuizen: {self.__huizen},\nBatterijen: {self.__batterijen}"

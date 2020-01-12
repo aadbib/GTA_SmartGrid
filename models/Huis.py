@@ -35,3 +35,6 @@ class Huis:
     # toString()
     def __str__(self):
         return f'Locatie: {self.__locatie}, Output: {self.__output}, Kabels: {self.__kabels}'
+
+    def __repr__(self):
+        return f'Locatie: {self.__locatie}'

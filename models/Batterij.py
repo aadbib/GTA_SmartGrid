@@ -72,3 +72,5 @@ class Batterij:
     def __str__(self):
         return f'Locatie: {self.__locatie}, Capaciteit: {self.__capaciteit}, Huizen: {self.__huizen}, Resterend: {self.get_resterend()}'
 
+    def __repr__(self):
+        return f'Locatie: {self.__locatie}'
