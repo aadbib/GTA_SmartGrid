@@ -1,6 +1,12 @@
 # Importeer libraries
 import sys
+import os
 import time
+
+# Zet root-pad goed om de modules vanaf CLI te laden
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+root_path = os.path.dirname(os.getcwd())
+sys.path.append(root_path)
 
 # Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
@@ -47,7 +53,7 @@ def main():
     print("Running algorithm, please wait...")
     start_time = time.time()
     for poging in range(pogingen):
-        grid = Grid(wijk, f"data/wijk{wijk}_huizen.csv", f"data/wijk{wijk}_batterijen.csv")
+        grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
         algorithm(grid)
         eind_prijs = grid.get_totale_prijs()
 
