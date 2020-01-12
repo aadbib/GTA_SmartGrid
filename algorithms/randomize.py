@@ -10,7 +10,7 @@ def randomize_objects(huizen, batterijen):
 
 def rand_algorithm(grid):
     """
-    Algoritme die 'random' de huizen aan een batterij aansluit
+    Algoritme die 'random' de huizen aan een batterij aansluit, waarbij er geen restricties zijn
     """
     huizen = grid.get_huizen()
     batterijen = grid.get_batterijen()

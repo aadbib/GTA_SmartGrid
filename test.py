@@ -22,6 +22,12 @@ def main():
         print("No such wijk!")
         exit(1)
 
+    sys_algorithm = sys.argv[2]
+
+    if sys_algorithm not in ['1', '2', '3']:
+        print("No such algorithm!")
+        exit(1)
+
     try:
         pogingen = int(sys.argv[3])
 
@@ -29,16 +35,10 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    sys_algorithm = sys.argv[2]
-
-    if sys_algorithm not in ['1', '2', '3']:
-        print("No such algorithm!")
-        exit(1)
-
     algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm, '3': rand_algorithm}
     algorithm = algorithms[sys_algorithm]
 
-    # Algoritme run-time test om de slechtste kosten en run-time in x pogingen te vinden #
+    """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
     # Base-line worst-case, best-case
     slechtste_prijs = 0
@@ -57,7 +57,6 @@ def main():
         if eind_prijs < beste_prijs:
             beste_prijs = eind_prijs
 
-    print(grid)
     print(f"Highest cost found: {slechtste_prijs}")
     print(f"Lowest cost found: {beste_prijs}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
