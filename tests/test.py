@@ -12,6 +12,7 @@ sys.path.append(root_path)
 from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
 from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
+from visualisation.plot_grid import draw
 
 # Main functie
 def main():
@@ -48,7 +49,11 @@ def main():
 
     # Base-line worst-case, best-case
     slechtste_prijs = 0
-    beste_prijs = 1000000
+
+    grid_beste = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
+    algorithm(grid_beste)
+
+    eind_beste_prijs = grid_beste.get_totale_prijs()
 
     print("Running algorithm, please wait...")
     start_time = time.time()
@@ -60,12 +65,15 @@ def main():
         if eind_prijs > slechtste_prijs:
             slechtste_prijs = eind_prijs
 
-        if eind_prijs < beste_prijs:
-            beste_prijs = eind_prijs
+        if eind_prijs < eind_beste_prijs:
+            eind_beste_prijs = eind_prijs
+            grid_beste = grid
 
     print(f"Highest cost found: {slechtste_prijs}")
-    print(f"Lowest cost found: {beste_prijs}")
+    print(f"Lowest cost found: {eind_beste_prijs}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
+
+    draw(grid_beste)
 
 if __name__=="__main__":
     main()
