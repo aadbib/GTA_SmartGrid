@@ -40,8 +40,6 @@ def main():
 
     grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
 
-    print(grid.get_huizen())
-
     # Voer algoritme op grid uit
     algorithm(grid)
 
