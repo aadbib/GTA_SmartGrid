@@ -41,8 +41,6 @@ class Batterij:
 
         return totale_prijs
 
-    # Leg alle kabels tussen huizen en batterijen
-    # Todo: Let op x en y van andere batterijen, no crossing
     def lay_cable(self, huis):
         distance_y = int(self.__locatie[1]) - int(huis.get_locatie()[1])
         distance_x = int(self.__locatie[0]) - int(huis.get_locatie()[0])
@@ -74,3 +72,5 @@ class Batterij:
     def __str__(self):
         return f'Locatie: {self.__locatie}, Capaciteit: {self.__capaciteit}, Huizen: {self.__huizen}, Resterend: {self.get_resterend()}'
 
+    def __repr__(self):
+        return f'Locatie: {self.__locatie}'
