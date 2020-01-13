@@ -17,7 +17,7 @@ def rand_algorithm(grid):
     randomize_objects(huizen, batterijen)
 
     # Sluit alles random aan tot alle huizen aangesloten zijn
-    while grid.is_everything_connected() is not True:
+    while grid.is_everything_connected() is False:
         huis = choice(huizen)
         batterij = choice(batterijen)
         batterij.lay_cable(huis)
