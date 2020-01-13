@@ -5,6 +5,13 @@ import matplotlib.lines as mlines
 from matplotlib.offsetbox import TextArea, DrawingArea, AnnotationBbox, OffsetImage
 import numpy as np
 from models.Grid import Grid
+import os
+import sys
+
+# Zet root-pad goed om de modules vanaf CLI te laden
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+root_path = os.path.dirname(os.getcwd())
+sys.path.append(root_path)
 
 # Functie: tekent grid
 def draw(grid):
@@ -30,7 +37,7 @@ def draw(grid):
     # Maak een grid van deze multidimensional array
     # Alpha is alleen transparency
     ax.grid(which='major', alpha=10, linewidth=2)
-    ax.grid(which='minor', alpha=1)
+    ax.grid(which='minor', alpha=0)
 
     # https://www.science-emergence.com/Articles/How-to-insert-an-image-a-picture-or-a-photo-in-a-matplotlib-figure/
     # https://gist.github.com/ppizarror/a36d214fd38a029cb80b7363bb133023
@@ -39,11 +46,10 @@ def draw(grid):
         batterij_x = int(batterij.get_locatie()[0])
         batterij_y = int(batterij.get_locatie()[1])
 
-        photo_battery = mpimg.imread('images/batterij_mini_mini.png')
+        photo_battery = mpimg.imread(f'{root_path}/images/batterij_mini_mini.png')
         imagebox2 = OffsetImage(photo_battery, zoom=1)
         addition_photo2 = AnnotationBbox(imagebox2, (batterij_x, batterij_y), frameon=False)
         ax.add_artist(addition_photo2)
-
         huizen = batterij.get_huizen()
         kleuren = ["cyan", "magenta", "green", "yellow", "red"]
 
@@ -51,7 +57,7 @@ def draw(grid):
             huis_x = int(huis.get_locatie()[0])
             huis_y = int(huis.get_locatie()[1])
 
-            photo_house = mpimg.imread('images/huis_mini_mini.png')
+            photo_house = mpimg.imread(f'{root_path}/images/huis_mini_mini.png')
             imagebox = OffsetImage(photo_house, zoom=1)
             addition_photo = AnnotationBbox(imagebox, (huis_x, huis_y), frameon=False)
             ax.add_artist(addition_photo)
@@ -81,7 +87,7 @@ def draw(grid):
                 except IndexError:
                     pass
 
-    plt.savefig('images/add_picture_matplotlib_figure.png',bbox_inches='tight', transparent=True)
+    plt.savefig(f'{root_path}/images/add_picture_matplotlib_figure.png',bbox_inches='tight', transparent=True)
 
     # Toon de plot
     plt.show()
