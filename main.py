@@ -43,6 +43,11 @@ def main():
     # Voer algoritme op grid uit
     algorithm(grid)
 
+    # count = 0
+    # for batterij in grid.get_batterijen():
+    #     for kabel in batterij.get_unieke_kabels():
+    #         count += 1
+
     # Teken grid
     draw(grid)
 

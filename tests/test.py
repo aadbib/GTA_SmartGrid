@@ -11,6 +11,7 @@ sys.path.append(root_path)
 # Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
+from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
 from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
 from visualisation.plot_grid import draw
 
@@ -31,7 +32,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3']:
+    if sys_algorithm not in ['1', '2', '3', '4']:
         print("No such algorithm!")
         exit(1)
 
@@ -42,25 +43,26 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm, '3': rand_algorithm}
+    algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm, '3': rand_algorithm, '4': rand_cable_dist_cap}
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
-    # Base-line worst-case, best-case
+    # Baseline best-case
     slechtste_prijs = 0
 
-    grid_beste = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
-    algorithm(grid_beste)
+    grid_beste = object
+    # algorithm(grid_beste)
 
-    eind_beste_prijs = grid_beste.get_totale_prijs()
+    # Baseline worst-case,
+    eind_beste_prijs = 1000000
 
     print("Running algorithm, please wait...")
     start_time = time.time()
     for poging in range(pogingen):
         grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
         algorithm(grid)
-        eind_prijs = grid.get_totale_prijs()
+        eind_prijs = grid.get_unieke_total_prijs()
 
         if eind_prijs > slechtste_prijs:
             slechtste_prijs = eind_prijs
