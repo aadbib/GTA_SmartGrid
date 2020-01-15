@@ -11,6 +11,7 @@ sys.path.append(root_path)
 # Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
+from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
 from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
 from visualisation.plot_grid import draw
 
@@ -18,8 +19,8 @@ from visualisation.plot_grid import draw
 def main():
 
     # Moet argument wijk en pogingen meegeven
-    if len(sys.argv) != 4:
-        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen>")
+    if len(sys.argv) != 5:
+        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen> <shared>")
         exit(1)
 
     wijk = str(sys.argv[1])
@@ -42,25 +43,33 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm, '3': rand_algorithm}
+    shared_arg = sys.argv[4]
+    if shared_arg not in ['0', '1']:
+        print("Shared must be 0 or 1")
+        exit(1)
+
+    algorithms = {'1': rand_one_to_one_algorithm, '2': dist_cap_algorithm, '3': rand_cable_dist_cap}
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
+    Shared = True if shared_arg == '1' else False
+
     # Base-line worst-case, best-case
     slechtste_prijs = 0
+    eind_beste_prijs = 1000000
 
-    grid_beste = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
-    algorithm(grid_beste)
-
-    eind_beste_prijs = grid_beste.get_totale_prijs()
+    grid_beste = object
 
     print("Running algorithm, please wait...")
     start_time = time.time()
     for poging in range(pogingen):
         grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
+
+        prijsbepaling = grid.get_unieke_total_prijs if Shared else grid.get_totale_prijs
         algorithm(grid)
-        eind_prijs = grid.get_totale_prijs()
+
+        eind_prijs = prijsbepaling()
 
         if eind_prijs > slechtste_prijs:
             slechtste_prijs = eind_prijs

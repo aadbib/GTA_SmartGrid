@@ -49,6 +49,14 @@ class Grid:
 
         return eind_prijs
 
+    def get_unieke_total_prijs(self):
+        eind_prijs = 0
+
+        for batterij in self.__batterijen:
+            eind_prijs += batterij.unieke_total_price()
+
+        return eind_prijs
+
     def get_batterijen(self):
         return self.__batterijen
 

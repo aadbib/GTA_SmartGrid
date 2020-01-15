@@ -36,4 +36,4 @@ def dist_cap_algorithm(grid):
 
     for huis in huizen:
         batterij = find_battery(batterijen, huis)
-        batterij.lay_cable(huis)
+        batterij.lay_cable_to_house(huis)

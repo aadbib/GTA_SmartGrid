@@ -20,7 +20,7 @@ def rand_algorithm(grid):
     while grid.is_everything_connected() is False:
         huis = choice(huizen)
         batterij = choice(batterijen)
-        batterij.lay_cable(huis)
+        batterij.lay_cable_to_house(huis)
 
 def rand_one_to_one_algorithm(grid):
     """
@@ -33,4 +33,4 @@ def rand_one_to_one_algorithm(grid):
 
     for huis in huizen:
         batterij = choice(batterijen)
-        batterij.lay_cable(huis)
+        batterij.lay_cable_to_house(huis)
