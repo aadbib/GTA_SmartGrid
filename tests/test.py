@@ -49,11 +49,7 @@ def main():
 
     # Base-line worst-case, best-case
     slechtste_prijs = 0
-
-    grid_beste = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
-    algorithm(grid_beste)
-
-    eind_beste_prijs = grid_beste.get_totale_prijs()
+    eind_beste_prijs = 1000000
 
     print("Running algorithm, please wait...")
     start_time = time.time()
