@@ -46,7 +46,11 @@ class Huis:
     #     return distance_x + distance_y
 
     # Todo: Maak functie die een huis aan een kabel aansluit
-    def lay_cable(self, kabel):
+    # Todo: Pas functie aan, zodat deze kabel ook in de set van batterij komt om te tekenen!
+
+    # Misschien toch een set in huizen zetten voor kabels,
+    # zodat je de batterij niet hoeft mee te geven, en niet eens deze list hoeft bij te houden!
+    def lay_cable_to_cable(self, kabel, batterij):
         distance_y = int(self.__locatie[1]) - int(kabel[1])
         distance_x = int(self.__locatie[0]) - int(kabel[0])
         kabel_y = int(kabel[1])
@@ -57,24 +61,23 @@ class Huis:
 
             for movement in range(abs(distance_y)):
                 self.set_kabels((kabel_x, kabel_y + movement))
+                batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
         else:
 
             for movement in range(abs(distance_y)):
                 self.set_kabels((kabel_x, kabel_y - movement))
+                batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
 
         if distance_x > 0:
 
             for movement in range(abs(distance_x) + 1):
                 self.set_kabels((kabel_x + movement, huis_y))
+                batterij.set_unieke_kabel((kabel_x + movement, huis_y))
         else:
 
             for movement in range(abs(distance_x) + 1):
                 self.set_kabels((kabel_x - movement, huis_y))
-
-
-
-
-
+                batterij.set_unieke_kabel((kabel_x - movement, huis_y))
 
     # toString()
     def __str__(self):

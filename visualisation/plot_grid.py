@@ -14,6 +14,7 @@ root_path = os.path.dirname(os.getcwd())
 sys.path.append(root_path)
 
 # Functie: tekent grid
+# Todo: teken de lijnen die in de batterijen ligt, want dat zijn de unieke kabels
 def draw(grid):
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
 

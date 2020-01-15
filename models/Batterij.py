@@ -56,7 +56,7 @@ class Batterij:
     def unieke_total_price(self):
         return ((len(self.get_unieke_kabels()) - 1) * Batterij.prijs_kabel) + Batterij.batterij_prijs
 
-    def lay_cable(self, huis):
+    def lay_cable_to_house(self, huis):
         distance_y = int(self.__locatie[1]) - int(huis.get_locatie()[1])
         distance_x = int(self.__locatie[0]) - int(huis.get_locatie()[0])
         huis_y = int(huis.get_locatie()[1])
