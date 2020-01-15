@@ -55,14 +55,11 @@ def main():
 
     Shared = True if shared_arg == '1' else False
 
-    # Baseline best-case
+    # Base-line worst-case, best-case
     slechtste_prijs = 0
+    eind_beste_prijs = 1000000
 
     grid_beste = object
-    # algorithm(grid_beste)
-
-    # Baseline worst-case,
-    eind_beste_prijs = 1000000
 
     print("Running algorithm, please wait...")
     start_time = time.time()
