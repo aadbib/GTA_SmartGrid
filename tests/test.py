@@ -19,8 +19,8 @@ from visualisation.plot_grid import draw
 def main():
 
     # Moet argument wijk en pogingen meegeven
-    if len(sys.argv) != 4:
-        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen>")
+    if len(sys.argv) != 5:
+        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen> <shared>")
         exit(1)
 
     wijk = str(sys.argv[1])
@@ -32,7 +32,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4']:
+    if sys_algorithm not in ['1', '2', '3']:
         print("No such algorithm!")
         exit(1)
 
@@ -43,10 +43,17 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm, '3': rand_algorithm, '4': rand_cable_dist_cap}
+    shared_arg = sys.argv[4]
+    if shared_arg not in ['0', '1']:
+        print("Shared must be 0 or 1")
+        exit(1)
+
+    algorithms = {'1': rand_one_to_one_algorithm, '2': dist_cap_algorithm, '3': rand_cable_dist_cap}
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
+
+    Shared = True if shared_arg == '1' else False
 
     # Baseline best-case
     slechtste_prijs = 0
@@ -61,8 +68,11 @@ def main():
     start_time = time.time()
     for poging in range(pogingen):
         grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
+
+        prijsbepaling = grid.get_unieke_total_prijs if Shared else grid.get_totale_prijs
         algorithm(grid)
-        eind_prijs = grid.get_unieke_total_prijs()
+
+        eind_prijs = prijsbepaling()
 
         if eind_prijs > slechtste_prijs:
             slechtste_prijs = eind_prijs

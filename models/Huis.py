@@ -50,34 +50,70 @@ class Huis:
 
     # Misschien toch een set in huizen zetten voor kabels,
     # zodat je de batterij niet hoeft mee te geven, en niet eens deze list hoeft bij te houden!
+    #
     def lay_cable_to_cable(self, kabel, batterij):
-        distance_y = int(self.__locatie[1]) - int(kabel[1])
-        distance_x = int(self.__locatie[0]) - int(kabel[0])
+        huis_kabel_afstand_y = int(self.__locatie[1]) - int(kabel[1])
+        huis_kabel_afstand_x = int(self.__locatie[0]) - int(kabel[0])
         kabel_y = int(kabel[1])
         kabel_x = int(kabel[0])
         huis_y = int(self.__locatie[1])
 
-        if distance_y > 0:
+        if huis_kabel_afstand_y > 0:
 
-            for movement in range(abs(distance_y)):
+            for movement in range(abs(huis_kabel_afstand_y)):
                 self.set_kabels((kabel_x, kabel_y + movement))
                 batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
         else:
 
-            for movement in range(abs(distance_y)):
+            for movement in range(abs(huis_kabel_afstand_y)):
                 self.set_kabels((kabel_x, kabel_y - movement))
                 batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
 
-        if distance_x > 0:
+        if huis_kabel_afstand_x > 0:
 
-            for movement in range(abs(distance_x) + 1):
+            for movement in range(abs(huis_kabel_afstand_x) + 1):
                 self.set_kabels((kabel_x + movement, huis_y))
                 batterij.set_unieke_kabel((kabel_x + movement, huis_y))
         else:
 
-            for movement in range(abs(distance_x) + 1):
+            for movement in range(abs(huis_kabel_afstand_x) + 1):
                 self.set_kabels((kabel_x - movement, huis_y))
                 batterij.set_unieke_kabel((kabel_x - movement, huis_y))
+
+        locatie_batterij = batterij.get_locatie()
+        locatie_batterij_y = int(locatie_batterij[1])
+        locatie_batterij_x = int(locatie_batterij[0])
+
+        kabel_batterij_afstand_y = int(locatie_batterij_y) - int(kabel[1])
+        kabel_batterij_afstand_x = int(locatie_batterij_x) - int(kabel[0])
+
+        # Beweging kabel naar boven
+        if kabel_batterij_afstand_y > 0:
+
+            for movement in range(abs(kabel_batterij_afstand_y)):
+                self.set_kabels((kabel_x, kabel_y + movement))
+                batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
+
+        # Beweging kabel naar beneden
+        else:
+
+            for movement in range(abs(kabel_batterij_afstand_y)):
+                self.set_kabels((kabel_x, kabel_y - movement))
+                batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
+
+        # Beweging kabel naar rechts
+        if kabel_batterij_afstand_x > 0:
+
+            for movement in range(abs(kabel_batterij_afstand_x) + 1):
+                self.set_kabels((kabel_x + movement, locatie_batterij_y))
+                batterij.set_unieke_kabel((kabel_x + movement, locatie_batterij_y))
+
+        # Beweging kabel naar links
+        else:
+
+            for movement in range(abs(kabel_batterij_afstand_x) + 1):
+                self.set_kabels((kabel_x - movement, locatie_batterij_y))
+                batterij.set_unieke_kabel((kabel_x - movement, locatie_batterij_y))
 
     # toString()
     def __str__(self):
