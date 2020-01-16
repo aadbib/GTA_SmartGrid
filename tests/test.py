@@ -12,9 +12,9 @@ sys.path.append(root_path)
 from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
 from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
-from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
-from algorithms.worst_dist_no_capacity_restrictions import worst_dist
-from algorithms.best_dist_no_capacity_restrictions import best_dist
+from algorithms.randomize import rand_one_to_one_algorithm
+from algorithms.worst_dist import worst_dist_no_capacity_restrictions
+from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
 from visualisation.plot_grid import draw
 
 # Main functie
@@ -34,7 +34,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4', '5']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5', '6']:
         print("No such algorithm!")
         exit(1)
 
@@ -50,12 +50,19 @@ def main():
         print("Shared must be 0 or 1")
         exit(1)
 
-    algorithms = {'1': rand_one_to_one_algorithm, '2': dist_cap_algorithm, '3': rand_cable_dist_cap, '4': worst_dist, '5': best_dist}
+    algorithms = {
+        '1': rand_one_to_one_algorithm,
+        '2': dist_cap_algorithm,
+        '3': rand_cable_dist_cap,
+        '4': worst_dist_no_capacity_restrictions,
+        '5': best_dist_no_capacity_restrictions,
+        '6': best_dist_no_cap_shared_cable
+    }
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
-    Shared = True if shared_arg == '1' else False
+    shared = True if shared_arg == '1' else False
 
     # Base-line worst-case, best-case
     slechtste_prijs = 0
@@ -68,7 +75,7 @@ def main():
     for poging in range(pogingen):
         grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
 
-        prijsbepaling = grid.get_unieke_total_prijs if Shared else grid.get_totale_prijs
+        prijsbepaling = grid.get_unieke_total_prijs if shared else grid.get_totale_prijs
         algorithm(grid)
 
         eind_prijs = prijsbepaling()
