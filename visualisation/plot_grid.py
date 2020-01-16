@@ -72,7 +72,7 @@ def draw(grid):
                     # x2, y2 = [22, 20], [21, 20]
 
                     kabel1, kabel2 = list(kabel), list(kabels[index + 1])
-                    print(kabel2)
+                    #print(kabel2)
                     dashes = {"red":-0.1, "yellow":-0.05, "green":0, "cyan":0.05, "magenta":0.1}
                     x1, y1 = [
                                 kabel1[0] + dashes[kleuren[batterij_index]],

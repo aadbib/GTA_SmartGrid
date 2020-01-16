@@ -13,6 +13,8 @@ from models.Grid import Grid
 from algorithms.randomize_dist_cap import dist_cap_algorithm
 from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
 from algorithms.randomize import rand_algorithm, rand_one_to_one_algorithm
+from algorithms.worst_dist_no_capacity_restrictions import worst_dist
+from algorithms.best_dist_no_capacity_restrictions import best_dist
 from visualisation.plot_grid import draw
 
 # Main functie
@@ -32,7 +34,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5']:
         print("No such algorithm!")
         exit(1)
 
@@ -48,7 +50,7 @@ def main():
         print("Shared must be 0 or 1")
         exit(1)
 
-    algorithms = {'1': rand_one_to_one_algorithm, '2': dist_cap_algorithm, '3': rand_cable_dist_cap}
+    algorithms = {'1': rand_one_to_one_algorithm, '2': dist_cap_algorithm, '3': rand_cable_dist_cap, '4': worst_dist, '5': best_dist}
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
