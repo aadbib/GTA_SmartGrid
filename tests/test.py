@@ -28,7 +28,7 @@ def main():
     wijk = str(sys.argv[1])
 
     # Argument moet 1, 2 of 3 zijn (wijken)
-    if wijk not in ['1', '2', '3']:
+    if wijk not in ['1', '2', '3', '4']:
         print("No such wijk!")
         exit(1)
 
