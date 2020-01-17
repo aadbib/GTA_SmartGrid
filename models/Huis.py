@@ -53,23 +53,23 @@ class Huis:
 
             for movement in range(abs(huis_kabel_afstand_y)):
                 self.set_kabels((kabel_x, kabel_y + movement))
-                batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
+                # batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
         else:
 
             for movement in range(abs(huis_kabel_afstand_y)):
                 self.set_kabels((kabel_x, kabel_y - movement))
-                batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
+                # batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
 
         if huis_kabel_afstand_x > 0:
 
             for movement in range(abs(huis_kabel_afstand_x) + 1):
                 self.set_kabels((kabel_x + movement, huis_y))
-                batterij.set_unieke_kabel((kabel_x + movement, huis_y))
+                # batterij.set_unieke_kabel((kabel_x + movement, huis_y))
         else:
 
             for movement in range(abs(huis_kabel_afstand_x) + 1):
                 self.set_kabels((kabel_x - movement, huis_y))
-                batterij.set_unieke_kabel((kabel_x - movement, huis_y))
+                # batterij.set_unieke_kabel((kabel_x - movement, huis_y))
 
     # toString()
     def __str__(self):

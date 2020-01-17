@@ -68,16 +68,14 @@ def main():
     slechtste_prijs = 0
     eind_beste_prijs = 1000000
 
-    grid_beste = object
+    grid_beste = None
 
     print("Running algorithm, please wait...")
     start_time = time.time()
     for poging in range(pogingen):
         grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
-
         prijsbepaling = grid.get_unieke_total_prijs if shared else grid.get_totale_prijs
         algorithm(grid)
-
         eind_prijs = prijsbepaling()
 
         if eind_prijs > slechtste_prijs:

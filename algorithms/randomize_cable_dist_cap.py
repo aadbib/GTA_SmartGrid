@@ -47,7 +47,7 @@ def rand_cable_dist_cap(grid):
                         # Als de afstand van de kabel beter is dan de beste afstand die geconstateerd is
                         if afstand_kabel < beste_afstand_kabel:
 
-                            # Zet dan dan deze kabel als de beste
+                            # Zet dan deze kabel als de beste
                             beste_afstand_kabel = afstand_kabel
 
                             # Onthoud de tuple/locatie van deze kabel

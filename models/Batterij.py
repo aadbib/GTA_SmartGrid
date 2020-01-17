@@ -28,12 +28,18 @@ class Batterij:
     def get_unieke_kabels(self):
         return self.__unieke_kabels
 
-    def set_unieke_kabel(self, kabel):
-        self.__unieke_kabels.add(kabel)
+    def set_unieke_kabels(self):
+        for huis in self.__huizen:
+            kabels = huis.get_kabels()
+
+            for k in kabels:
+                self.__unieke_kabels.add(k)
+
+    def clear_unieke_kabels(self):
+        self.__unieke_kabels.clear()
 
     def set_huis(self, huis):
-        if huis not in self.__huizen:
-            self.__huizen.append(huis)
+        self.__huizen.append(huis)
 
     def get_resterend(self):
         aangesloten = 0
@@ -54,7 +60,9 @@ class Batterij:
         return totale_prijs
 
     def unieke_total_price(self):
-        return ((len(self.get_unieke_kabels()) - 1) * Batterij.prijs_kabel) + Batterij.batterij_prijs
+        self.set_unieke_kabels()
+
+        return ((len(self.__unieke_kabels) - 1) * Batterij.prijs_kabel) + Batterij.batterij_prijs
 
     def lay_cable_to_house(self, huis):
         distance_y = int(self.__locatie[1]) - int(huis.get_locatie()[1])
@@ -67,23 +75,23 @@ class Batterij:
 
             for movement in range(abs(distance_y)):
                 huis.set_kabels((huis_x, huis_y + movement))
-                self.set_unieke_kabel((huis_x, huis_y + movement))
+                # self.set_unieke_kabel((huis_x, huis_y + movement))
         else:
 
             for movement in range(abs(distance_y)):
                 huis.set_kabels((huis_x, huis_y - movement))
-                self.set_unieke_kabel((huis_x, huis_y - movement))
+                # self.set_unieke_kabel((huis_x, huis_y - movement))
 
         if distance_x > 0:
 
             for movement in range(abs(distance_x) + 1):
                 huis.set_kabels((huis_x + movement, batterij_y))
-                self.set_unieke_kabel((huis_x + movement, batterij_y))
+                # self.set_unieke_kabel((huis_x + movement, batterij_y))
         else:
 
             for movement in range(abs(distance_x) + 1):
                 huis.set_kabels((huis_x - movement, batterij_y))
-                self.set_unieke_kabel((huis_x - movement, batterij_y))
+                # self.set_unieke_kabel((huis_x - movement, batterij_y))
 
         self.set_huis(huis)
 
