@@ -63,13 +63,9 @@ class Grid:
     def get_huizen(self):
         return self.__huizen
 
-    def is_everything_connected(self):
-        connected = 0
-
+    def clear_unieke_kabels_batterijen(self):
         for batterij in self.__batterijen:
-            connected += len(batterij.get_huizen())
-
-        return connected == len(self.__huizen)
+            batterij.clear_unieke_kabels()
 
     def __str__(self):
         # toString()
