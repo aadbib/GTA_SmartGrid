@@ -6,33 +6,33 @@ def hill_climber_algorithm(grid):
 
     # Maak een deepcopy van de grid, en leeg de set van unieke kabels voor alle batterijen
     grid_copy = deepcopy(grid)
-    grid_copy.clear_unieke_kabels_batterijen()
+    grid_copy.clear_unique_cables_batteries()
 
     # Pak alle batterijen uit deze grid
-    alle_batterijen = grid.get_batterijen()
+    all_batteries = grid.get_batteries()
 
-    for b in alle_batterijen:
+    for b in all_batteries:
 
         # Todo: In hillclimber moet je niet dezelfde oplossingen gaan vergelijken, bv huis1, batterij1 vs huis2, batterij 2.
         # Todo: Zoek uit hoe je geen sets die al vergeleken zijn, niet opnieuw met elkaar vergelijkt?
 
         # Zorgt ervoor dat we huizen NIET uit dezelfde batterij gaan pakken en vergelijken
-        alle_indexen_alle_batterijen = [0, 1, 2, 3, 4]
+        all_indexes_all_batteries = [0, 1, 2, 3, 4]
 
         # Pak twee sets, en onthoud alles
-        batterij1_index = choice(alle_indexen_alle_batterijen)
-        alle_indexen_alle_batterijen.remove(batterij1_index)
-        batterij1 = alle_batterijen[batterij1_index]
-        batterij1_huizen = batterij1.get_huizen()
-        huis1 = choice(batterij1_huizen)
-        huis1_index = batterij1_huizen.index(huis1)
+        battery1_index = choice(all_indexes_all_batteries)
+        all_indexes_all_batteries.remove(battery1_index)
+        battery1 = all_batteries[battery1_index]
+        battery1_houses = battery1.get_houses()
+        house1 = choice(battery1_houses)
+        house1_index = battery1_houses.index(house1)
 
-        batterij2_index = choice(alle_indexen_alle_batterijen)
-        alle_indexen_alle_batterijen.remove(batterij2_index)
-        batterij2 = alle_batterijen[batterij2_index]
-        batterij2_huizen = batterij2.get_huizen()
-        huis2 = choice(batterij2_huizen)
-        huis2_index = batterij2_huizen.index(huis2)
+        battery2_index = choice(all_indexes_all_batteries)
+        all_indexes_all_batteries.remove(battery2_index)
+        battery2 = all_batteries[battery2_index]
+        battery2_houses = battery2.get_houses()
+        house2 = choice(battery2_houses)
+        house2_index = battery2_houses.index(house2)
 
         # Todo: Pak de kabels/coordinaten van deze huizen, leeg ze, en haal de huizen weg van hun batterijen_array
         # Todo: Bereken opnieuw kabel/batterij afstand, maar dan met geswitchte batterijen. Dus huis-1 batterij-2, huis-2 batterij-1
