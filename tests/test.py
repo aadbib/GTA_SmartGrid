@@ -25,11 +25,11 @@ def main():
         print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen> <shared>")
         exit(1)
 
-    wijk = str(sys.argv[1])
+    neighbourhood = str(sys.argv[1])
 
     # Argument moet 1, 2 of 3 zijn (wijken)
-    if wijk not in ['1', '2', '3', '4']:
-        print("No such wijk!")
+    if neighbourhood not in ['1', '2', '3', '4']:
+        print("No such neighbourhood!")
         exit(1)
 
     sys_algorithm = sys.argv[2]
@@ -39,7 +39,7 @@ def main():
         exit(1)
 
     try:
-        pogingen = int(sys.argv[3])
+        attempts = int(sys.argv[3])
 
     except:
         print("You have to give an integer")
@@ -65,33 +65,31 @@ def main():
     shared = True if shared_arg == '1' else False
 
     # Base-line worst-case, best-case
-    slechtste_prijs = 0
-    eind_beste_prijs = 1000000
+    worst_price = 0
+    final_best_price = 1000000
 
-    grid_beste = object
+    best_grid = None
 
     print("Running algorithm, please wait...")
     start_time = time.time()
-    for poging in range(pogingen):
-        grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
-
-        prijsbepaling = grid.get_unieke_total_prijs if shared else grid.get_totale_prijs
+    for attempt in range(attempts):
+        grid = Grid(neighbourhood, f"{root_path}/data/wijk{neighbourhood}_huizen.csv", f"{root_path}/data/wijk{neighbourhood}_batterijen.csv")
+        price_determination = grid.get_unique_total_price if shared else grid.get_total_price
         algorithm(grid)
+        final_price = price_determination()
 
-        eind_prijs = prijsbepaling()
+        if final_price > worst_price:
+            worst_price = final_price
 
-        if eind_prijs > slechtste_prijs:
-            slechtste_prijs = eind_prijs
+        if final_price < final_best_price:
+            final_best_price = final_price
+            best_grid = grid
 
-        if eind_prijs < eind_beste_prijs:
-            eind_beste_prijs = eind_prijs
-            grid_beste = grid
-
-    print(f"Highest cost found: {slechtste_prijs}")
-    print(f"Lowest cost found: {eind_beste_prijs}")
+    print(f"Highest cost found: {worst_price}")
+    print(f"Lowest cost found: {final_best_price}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
 
-    draw(grid_beste)
+    draw(best_grid)
 
 if __name__=="__main__":
     main()
