@@ -26,11 +26,11 @@ def main():
         print("Usage: python main.py <wijk_nummer> <algoritme>")
         exit(1)
 
-    wijk = str(sys.argv[1])
+    neighbourhood = str(sys.argv[1])
 
     # Argument moet 1, 2 of 3 zijn (wijken)
-    if wijk not in ['1', '2', '3']:
-        print("No such wijk!")
+    if neighbourhood not in ['1', '2', '3']:
+        print("No such neighbourhood!")
         exit(1)
 
     sys_algorithm = sys.argv[2]
@@ -42,7 +42,7 @@ def main():
     algorithms = {'1': dist_cap_algorithm, '2': rand_one_to_one_algorithm}
     algorithm = algorithms[sys_algorithm]
 
-    grid = Grid(wijk, f"{root_path}/data/wijk{wijk}_huizen.csv", f"{root_path}/data/wijk{wijk}_batterijen.csv")
+    grid = Grid(neighbourhood, f"{root_path}/data/wijk{neighbourhood}_huizen.csv", f"{root_path}/data/wijk{neighbourhood}_batterijen.csv")
 
     # Voer algoritme op grid uit
     algorithm(grid)
