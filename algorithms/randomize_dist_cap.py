@@ -1,39 +1,39 @@
 # Todo: Upper en lower bound definieren
 from .randomize import randomize_objects
 
-def find_battery(batterijen, huis):
+def find_battery(batteries, house):
     """
     Zoekt het dichtstbijzijndste batterij voor een gegeven huis, waarbij de output in de resterende capaciteit past
     """
-    optimale_index = 0
-    min_afstand = 100
-    output_huis = huis.get_output()
+    optimal_index = 0
+    min_distance = 100
+    output_house = house.get_output()
 
-    for index, batterij in enumerate(batterijen):
+    for index, battery in enumerate(batteries):
         try:
-            afstand_batterij = huis.distance(batterij)
+            distance_battery = house.distance(battery)
 
-            if afstand_batterij < min_afstand:
-                resterend = batterij.get_resterend()
+            if distance_battery < min_distance:
+                remaining = battery.get_remaining()
 
-                if resterend >= output_huis:
-                    optimale_index = index
-                    min_afstand = afstand_batterij
+                if remaining >= output_house:
+                    optimal_index = index
+                    min_distance = distance_battery
 
         except IndexError:
             pass
 
-    return batterijen[optimale_index]
+    return batteries[optimal_index]
 
 def dist_cap_algorithm(grid):
     """
     Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit, waarbij de output in de capaciteit past
     """
-    huizen = grid.get_huizen()
-    batterijen = grid.get_batterijen()
+    houses = grid.get_houses()
+    batteries = grid.get_batteries()
 
-    randomize_objects(huizen, batterijen)
+    randomize_objects(houses, batteries)
 
-    for huis in huizen:
-        batterij = find_battery(batterijen, huis)
-        batterij.lay_cable(huis)
+    for house in houses:
+        battery = find_battery(batteries, house)
+        battery.lay_cable_to_house(house)
