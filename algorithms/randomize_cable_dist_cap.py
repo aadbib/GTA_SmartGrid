@@ -3,7 +3,7 @@ from .randomize import randomize_objects
 
 def rand_cable_dist_cap(grid):
     """
-    Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
+    Algoritme die ook naar bestaande gelegde kabels kijkt, en de kabel/batterij kiest met minste afstand
     """
     huizen = grid.get_huizen()
     batterijen = grid.get_batterijen()
