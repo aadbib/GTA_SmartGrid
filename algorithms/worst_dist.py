@@ -1,90 +1,90 @@
 from .randomize import randomize_objects
 
-def find_worst_battery(batterijen, huis):
+def find_worst_battery(batteries, house):
     """
     Zoekt de verste batterij voor een gegeven huis, waarbij de output niet uitmaakt
     """
-    slechtste_index = 0
-    max_afstand = 0
+    worst_index = 0
+    max_distance = 0
 
-    for index, batterij in enumerate(batterijen):
+    for index, battery in enumerate(batteries):
         try:
-            afstand_batterij = huis.distance(batterij)
+            distance_battery = house.distance(battery)
 
-            if afstand_batterij > max_afstand:
-                slechtste_index = index
-                max_afstand = afstand_batterij
+            if distance_battery > max_distance:
+                worst_index = index
+                max_distance = distance_battery
 
         except IndexError:
             pass
 
-    return batterijen[slechtste_index]
+    return batteries[worst_index]
 
 
 def worst_dist_no_capacity_restrictions(grid):
     """
     Algoritme die de slechtse batterij voor een huis linkt
     """
-    huizen = grid.get_huizen()
-    batterijen = grid.get_batterijen()
-    for huis in huizen:
-        batterij = find_worst_battery(batterijen, huis)
-        batterij.lay_cable_to_house(huis)
+    houses = grid.get_houses()
+    batteries = grid.get_batteries()
+    for house in houses:
+        battery = find_worst_battery(batteries, house)
+        battery.lay_cable_to_house(house)
 
 
 def worst_dist_no_cap_shared_cable(grid):
     """
     Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
     """
-    huizen = grid.get_huizen()
-    batterijen = grid.get_batterijen()
+    houses = grid.get_houses()
+    batteries = grid.get_batteries()
 
-    randomize_objects(huizen, batterijen)
+    randomize_objects(houses, batteries)
 
     # Voor huis in huizen
-    for huis in huizen:
+    for house in houses:
 
         # Zoek de slechtste batterij
-        batterij = find_worst_battery(batterijen, huis)
+        battery = find_worst_battery(batteries, house)
 
         # Bereken de afstand tussen de slechtste batterij en huis
-        afstand_batterij = huis.distance(batterij)
+        distance_battery = house.distance(battery)
 
         # Base-line afstand kabel (Upper-bound)
-        slechtste_afstand_kabel = 0
+        worst_distance_cable = 0
 
         # Declaratie slechtste kabel
-        slechtste_kabel = tuple
+        worst_cable = tuple
 
         # Loop door de batterijen array
-        for b in batterijen:
+        for b in batteries:
 
             # Pak de unieke kabels die aan de batterij is aangesloten
-            kabels = b.get_unieke_kabels()
+            cables = b.get_unique_cables()
 
             # Loop door deze unieke kabels
-            for k in kabels:
-                afstand_kabel = huis.distance(k)
+            for c in cables:
+                distance_cable = house.distance(c)
 
                 # Als de afstand van de kabel meer is dan de slechtste afstand die geconstateerd is
-                if afstand_kabel > slechtste_afstand_kabel:
+                if distance_cable > worst_distance_cable:
 
                     # Zet dan dan deze kabel als de slechtste
-                    slechtste_afstand_kabel = afstand_kabel
+                    worst_distance_cable = distance_cable
 
                     # Onthoud de tuple/locatie van deze kabel
-                    slechtste_kabel = k
+                    worst_cable = c
 
                     # Onthoud van welke batterij deze kabel komt
-                    batterij_kabel = b
+                    battery_cable = b
 
         # Als de afstand van deze kabel verder ligt dan de afstand van de verste batterij
-        if slechtste_afstand_kabel > afstand_batterij:
-            batterij_kabel.set_huis(huis)
+        if worst_distance_cable > distance_battery:
+            battery_cable.set_house(house)
 
             # Leg kabel vanuit huis naar deze verste kabel
-            huis.lay_cable_to_cable(slechtste_kabel, batterij_kabel)
+            house.lay_cable_to_cable(worst_cable, battery_cable)
 
         # Anders sluit aan de verste batterij
         else:
-            batterij.lay_cable_to_house(huis)
+            battery.lay_cable_to_house(house)

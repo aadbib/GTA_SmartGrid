@@ -1,76 +1,72 @@
 # Importeer libraries
 import csv
-from .Huis import Huis
-from .Batterij import Batterij
+from .House import House
+from .Battery import Battery
 
 # Model Grid
 class Grid:
 
     # Static attributen
-    grote_stappen = 10
-    kleine_stappen = 1
-    begin_as = -1
-    eind_as = 52
+    big_steps = 10
+    small_steps = 1
+    start_axis = -1
+    end_axis = 52
 
-    def __init__(self, wijk, house_file, battery_file):
-        self.__wijk = wijk
-        self.__batterijen = []
-        self.__huizen = []
+    def __init__(self, neighbourhood, house_file, battery_file):
+        self.__neighbourhood = neighbourhood
+        self.__batteries = []
+        self.__houses = []
         self.load_objects(house_file, battery_file)
 
     def load_objects(self, *argv):
 
-        huizen_wijk = open(argv[0])
-        batterijen_wijk = open(argv[1])
+        houses_neighbourhood = open(argv[0])
+        batteries_neighbourhood = open(argv[1])
 
         # DictReader
-        reader = csv.DictReader(huizen_wijk)
+        reader = csv.DictReader(houses_neighbourhood)
 
         # Loop door csv-reader, maak huis-objecten aan
         for line in reader:
-            huis = Huis(f"{line['x']},{line[' y']}", line[' max output'])
-            self.__huizen.append(huis)
+            house = House(f"{line['x']},{line[' y']}", line[' max output'])
+            self.__houses.append(house)
 
-        huizen_wijk.close()
-        reader = csv.DictReader(batterijen_wijk)
+        houses_neighbourhood.close()
+        reader = csv.DictReader(batteries_neighbourhood)
 
         # Loop door csv-reader, maak batterij-objecten aan
         for line in reader:
-            batterij = Batterij(line['positie'], line[' capaciteit'])
-            self.__batterijen.append(batterij)
+            battery = Battery(line['positie'], line[' capaciteit'])
+            self.__batteries.append(battery)
 
-        batterijen_wijk.close()
+        batteries_neighbourhood.close()
 
-    def get_totale_prijs(self):
-        eind_prijs = 0
+    def get_total_price(self):
+        final_price = 0
 
-        for batterij in self.__batterijen:
-            eind_prijs += batterij.total_price()
+        for battery in self.__batteries:
+            final_price += battery.total_price_battery()
 
-        return eind_prijs
+        return final_price
 
-    def get_unieke_total_prijs(self):
-        eind_prijs = 0
+    def get_unique_total_price(self):
+        final_price = 0
 
-        for batterij in self.__batterijen:
-            eind_prijs += batterij.unieke_total_price()
+        for battery in self.__batteries:
+            final_price += battery.unique_total_price()
 
-        return eind_prijs
+        return final_price
 
-    def get_batterijen(self):
-        return self.__batterijen
+    def get_batteries(self):
+        return self.__batteries
 
-    def get_huizen(self):
-        return self.__huizen
+    def get_houses(self):
+        return self.__houses
 
-    def is_everything_connected(self):
-        connected = 0
-
-        for batterij in self.__batterijen:
-            connected += len(batterij.get_huizen())
-
-        return connected == len(self.__huizen)
+    def clear_unique_cables_batteries(self):
+        for battery in self.__batteries:
+            battery.clear_unique_cables()
 
     def __str__(self):
         # toString()
-        return f"Grid voor de wijk: {self.__wijk},\nHuizen: {self.__huizen},\nBatterijen: {self.__batterijen}"
+        return f"Grid voor de wijk: {self.__neighbourhood},\nHuizen: {self.__houses},\nBatterijen: {self.__batteries}"
