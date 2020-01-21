@@ -45,6 +45,11 @@ class Battery:
     def set_house(self, house):
         self.__houses.append(house)
 
+    def remove_house(self, index):
+        house = self.__houses[index]
+        house.clear_cables()
+        self.__houses.pop(index)
+
     def get_remaining(self):
         attached = 0
 

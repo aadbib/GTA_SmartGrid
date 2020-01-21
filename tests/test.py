@@ -15,8 +15,10 @@ from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
 from algorithms.randomize import rand_one_to_one_algorithm
 from algorithms.worst_dist import worst_dist_no_capacity_restrictions
 from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
-from visualisation.plot_grid import draw
 from algorithms.bat_randomize_dist_cap import bat_dist_cap_algorithm
+from algorithms.hill_climber import hill_climber_algorithm
+from visualisation.plot_grid import draw
+
 
 # Main functie
 def main():
@@ -69,11 +71,9 @@ def main():
     }
 
     if algorithm == worst_dist_no_capacity_restrictions:
-        shared_question = input("Do you want to implement shared-cable strategy?\n Yes: [0]\n No: [1]\n")
+        shared_question = input("Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
         while shared_question not in ['0', '1']:
-            shared_question = input("Try again: Do you want to implement shared-cable strategy?\n Yes: [0]\n No: [1]\n")
-            if shared_question in ['0', '1']:
-                break
+            shared_question = input("Try again: Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
         shared = algorithms_shared_cable[algorithm][int(shared_question)]
 
     else:
@@ -87,7 +87,9 @@ def main():
 
     print("Running algorithm, please wait...")
     start_time = time.time()
+
     for attempt in range(attempts):
+        # Als niet iteratief:
         grid = Grid(neighbourhood, f"{root_path}/data/wijk{neighbourhood}_huizen.csv", f"{root_path}/data/wijk{neighbourhood}_batterijen.csv")
         price_determination = grid.get_unique_total_price if shared else grid.get_total_price
         algorithm(grid)
@@ -103,6 +105,29 @@ def main():
     print(f"Highest cost found: {worst_price}")
     print(f"Lowest cost found: {final_best_price}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
+
+    # Wil je iteratief doen?
+    iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
+
+    if iterative == "0":
+        attempts = eval(input("How many times do you want to iterate? "))
+
+        while type(attempts) != int:
+            attempts = eval(input("Input is not an integer, try again: "))
+
+        while attempts <= 0:
+            attempts = eval(input("Input has to be positive, try again: "))
+
+
+        for pogingen in range(attempts):
+            grid = hill_climber_algorithm(best_grid)
+
+            if grid is not None:
+                best_grid = grid
+                final_best_price = best_grid.get_total_price()
+
+        print(f"Cost found: {final_best_price}")
+        print("--- %s seconds runtime ---" % (time.time() - start_time))
 
     draw(best_grid)
 
