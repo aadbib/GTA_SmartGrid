@@ -28,15 +28,19 @@ class Battery:
     def get_unique_cables(self):
         return self.__unique_cables
 
-    def set_unique_cables(self):
+    def set_unique_cable(self, cable):
+        self.__unique_cables.add(cable)
+
+    def clear_unique_cables(self):
+        self.__unique_cables.clear()
+
+    # Voor iteratief opnieuw unieke kabels leggen
+    def set_unique_cables_iterative(self):
         for house in self.__houses:
             cables = house.get_cables()
 
             for c in cables:
                 self.__unique_cables.add(c)
-
-    def clear_unique_cables(self):
-        self.__unique_cables.clear()
 
     def set_house(self, house):
         self.__houses.append(house)
@@ -60,8 +64,6 @@ class Battery:
         return total_price
 
     def unique_total_price(self):
-        self.set_unique_cables()
-
         return ((len(self.__unique_cables) - 1) * Battery.price_cable) + Battery.battery_price
 
     def lay_cable_to_house(self, house):
@@ -75,23 +77,23 @@ class Battery:
 
             for movement in range(abs(distance_y)):
                 house.set_cables((house_x, house_y + movement))
-                # self.set_unieke_kabel((huis_x, huis_y + movement))
+                self.set_unique_cable((house_x, house_y + movement))
         else:
 
             for movement in range(abs(distance_y)):
                 house.set_cables((house_x, house_y - movement))
-                # self.set_unieke_kabel((huis_x, huis_y - movement))
+                self.set_unique_cable((house_x, house_y - movement))
 
         if distance_x > 0:
 
             for movement in range(abs(distance_x) + 1):
                 house.set_cables((house_x + movement, battery_y))
-                # self.set_unieke_kabel((huis_x + movement, batterij_y))
+                self.set_unique_cable((house_x + movement, battery_y))
         else:
 
             for movement in range(abs(distance_x) + 1):
                 house.set_cables((house_x - movement, battery_y))
-                # self.set_unieke_kabel((huis_x - movement, batterij_y))
+                self.set_unique_cable((house_x - movement, battery_y))
 
         self.set_house(house)
 

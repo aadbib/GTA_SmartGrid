@@ -16,13 +16,14 @@ from algorithms.randomize import rand_one_to_one_algorithm
 from algorithms.worst_dist import worst_dist_no_capacity_restrictions
 from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
 from visualisation.plot_grid import draw
+from algorithms.bat_randomize_dist_cap import bat_dist_cap_algorithm
 
 # Main functie
 def main():
 
     # Moet argument wijk en pogingen meegeven
-    if len(sys.argv) != 5:
-        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen> <shared>")
+    if len(sys.argv) != 4:
+        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen>")
         exit(1)
 
     neighbourhood = str(sys.argv[1])
@@ -34,7 +35,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4', '5', '6']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7']:
         print("No such algorithm!")
         exit(1)
 
@@ -45,24 +46,38 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    shared_arg = sys.argv[4]
-    if shared_arg not in ['0', '1']:
-        print("Shared must be 0 or 1")
-        exit(1)
-
     algorithms = {
         '1': rand_one_to_one_algorithm,
         '2': dist_cap_algorithm,
         '3': rand_cable_dist_cap,
         '4': worst_dist_no_capacity_restrictions,
         '5': best_dist_no_capacity_restrictions,
-        '6': best_dist_no_cap_shared_cable
+        '6': best_dist_no_cap_shared_cable,
+        '7': bat_dist_cap_algorithm
     }
     algorithm = algorithms[sys_algorithm]
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
+    algorithms_shared_cable = {
+        rand_one_to_one_algorithm: False,
+        dist_cap_algorithm: False,
+        rand_cable_dist_cap: True,
+        worst_dist_no_capacity_restrictions: [True, False],
+        best_dist_no_capacity_restrictions: False,
+        best_dist_no_cap_shared_cable: True,
+        bat_dist_cap_algorithm: False
+    }
 
-    shared = True if shared_arg == '1' else False
+    if algorithm == worst_dist_no_capacity_restrictions:
+        shared_question = input("Do you want to implement shared-cable strategy?\n Yes: [0]\n No: [1]\n")
+        while shared_question not in ['0', '1']:
+            shared_question = input("Try again: Do you want to implement shared-cable strategy?\n Yes: [0]\n No: [1]\n")
+            if shared_question in ['0', '1']:
+                break
+        shared = algorithms_shared_cable[algorithm][int(shared_question)]
+
+    else:
+        shared = algorithms_shared_cable[algorithm]
 
     # Base-line worst-case, best-case
     worst_price = 0

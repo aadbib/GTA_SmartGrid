@@ -9,7 +9,7 @@ def hill_climber_algorithm(grid):
     grid_copy.clear_unique_cables_batteries()
 
     # Pak alle batterijen uit deze grid
-    all_batteries = grid.get_batteries()
+    all_batteries = grid_copy.get_batteries()
 
     for b in all_batteries:
 
