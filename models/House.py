@@ -23,6 +23,9 @@ class House:
     def set_cables(self, cable):
         self.__cables.append(cable)
 
+    def clear_cables(self):
+        self.__cables.clear()
+
     def calculate_price_cables(self):
         return (len(self.get_cables()) - 1) * House.price_cable
 
@@ -53,23 +56,23 @@ class House:
 
             for movement in range(abs(house_cable_distance_y)):
                 self.set_cables((cable_x, cable_y + movement))
-                # batterij.set_unieke_kabel((kabel_x, kabel_y + movement))
+                battery.set_unique_cable((cable_x, cable_y + movement))
         else:
 
             for movement in range(abs(house_cable_distance_y)):
-                self.set_kabels((cable_x, cable_y - movement))
-                # batterij.set_unieke_kabel((kabel_x, kabel_y - movement))
+                self.set_cables((cable_x, cable_y - movement))
+                battery.set_unique_cable((cable_x, cable_y - movement))
 
         if house_cable_distance_x > 0:
 
             for movement in range(abs(house_cable_distance_x) + 1):
                 self.set_cables((cable_x + movement, house_y))
-                # batterij.set_unieke_kabel((kabel_x + movement, huis_y))
+                battery.set_unique_cable((cable_x + movement, house_y))
         else:
 
             for movement in range(abs(house_cable_distance_x) + 1):
                 self.set_cables((cable_x - movement, house_y))
-                # batterij.set_unieke_kabel((kabel_x - movement, huis_y))
+                battery.set_unique_cable((cable_x - movement, house_y))
 
     # toString()
     def __str__(self):
