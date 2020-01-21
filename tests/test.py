@@ -109,16 +109,21 @@ def main():
     # Wil je iteratief doen?
     iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
 
+    while not iterative.isdigit():
+        iterative = input("Input is not an integer, try again:\nYes: [0]\nNo: [1]\n")
+
+    while iterative not in ['0', '1']:
+        iterative = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
+
     if iterative == "0":
-        attempts = eval(input("How many times do you want to iterate? "))
+        attempts = input("How many times do you want to iterate? ")
 
-        while type(attempts) != int:
-            attempts = eval(input("Input is not an integer, try again: "))
+        while not attempts.isdigit():
+            attempts = input("Input is not an integer, try again: ")
 
-        while attempts <= 0:
-            attempts = eval(input("Input has to be positive, try again: "))
+        attempts = int(attempts)
 
-
+        start_time = time.time()
         for pogingen in range(attempts):
             grid = hill_climber_algorithm(best_grid)
 

@@ -45,6 +45,10 @@ def hill_climber_algorithm(grid):
     battery1.lay_cable_to_house(house2)
     battery2.lay_cable_to_house(house1)
 
+    # Vul de battery set weer met unieke kabels
+    battery1.set_unique_cables_iterative()
+    battery2.set_unique_cables_iterative()
+
     # Check of capaciteit overschreden wordt, nee: ga door ja: verwijder copy en stop
     if battery1.get_remaining() < 0 or battery2.get_remaining() < 0:
 
