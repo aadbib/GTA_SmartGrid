@@ -109,10 +109,7 @@ def main():
     # Wil je iteratief doen?
     iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
 
-    while not iterative.isdigit():
-        iterative = input("Input is not an integer, try again:\nYes: [0]\nNo: [1]\n")
-
-    while iterative not in ['0', '1']:
+    while not iterative.isdigit() or iterative not in ['0', '1']:
         iterative = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
 
     if iterative == "0":
