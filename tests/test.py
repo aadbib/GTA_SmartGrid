@@ -119,8 +119,9 @@ def main():
             attempts = input("Input is not an integer, try again: ")
 
         attempts = int(attempts)
-
+        print("Running iterative algorithm, please wait...")
         start_time = time.time()
+
         for pogingen in range(attempts):
             grid = hill_climber_algorithm(best_grid)
 
