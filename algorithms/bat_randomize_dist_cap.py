@@ -36,6 +36,7 @@ def find_house(battery, houses):
     except:
         pass
 
+
 # Todo: Er is een probleem... Stel een andere batterij begint eerst, dan steeltie huis van andere batterij
 def bat_dist_cap_algorithm(grid):
     """
@@ -47,6 +48,8 @@ def bat_dist_cap_algorithm(grid):
     randomize_objects(houses, batteries)
 
     houses_copy = deepcopy(houses)
+
+    deleted = []
 
     for battery in batteries:
 
