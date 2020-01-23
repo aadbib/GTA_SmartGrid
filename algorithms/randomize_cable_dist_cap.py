@@ -61,7 +61,7 @@ def rand_cable_dist_cap(grid):
             battery_cable.set_house(house)
 
             # Leg kabel vanuit huis naar deze dichtsbijzijndste kabel
-            huis.lay_cable_to_cable(best_cable, battery_cable)
+            house.lay_cable_to_cable(best_cable, battery_cable)
 
         # Anders sluit aan de dichtsbijzijnste batterij
         else:
