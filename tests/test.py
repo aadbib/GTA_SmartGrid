@@ -2,6 +2,7 @@
 import sys
 import os
 import time
+from copy import deepcopy
 
 # Zet root-pad goed om de modules vanaf CLI te laden
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -17,6 +18,7 @@ from algorithms.worst_dist import worst_dist_no_capacity_restrictions
 from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
 from algorithms.bat_randomize_dist_cap import bat_dist_cap_algorithm
 from algorithms.hill_climber import hill_climber_algorithm
+from algorithms.diamond_dist_cap_cable import diamond_dist_cap_cable
 from visualisation.plot_grid import draw
 
 
@@ -37,7 +39,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7', '8']:
         print("No such algorithm!")
         exit(1)
 
@@ -55,7 +57,8 @@ def main():
         '4': worst_dist_no_capacity_restrictions,
         '5': best_dist_no_capacity_restrictions,
         '6': best_dist_no_cap_shared_cable,
-        '7': bat_dist_cap_algorithm
+        '7': bat_dist_cap_algorithm,
+        '8': diamond_dist_cap_cable
     }
     algorithm = algorithms[sys_algorithm]
 
@@ -67,7 +70,8 @@ def main():
         worst_dist_no_capacity_restrictions: [True, False],
         best_dist_no_capacity_restrictions: False,
         best_dist_no_cap_shared_cable: True,
-        bat_dist_cap_algorithm: False
+        bat_dist_cap_algorithm: False,
+        diamond_dist_cap_cable: True
     }
 
     if algorithm == worst_dist_no_capacity_restrictions:
@@ -106,31 +110,48 @@ def main():
     print(f"Lowest cost found: {final_best_price}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
 
-    # Wil je iteratief doen?
-    iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
+    if int(sys_algorithm) < 3:
 
-    while not iterative.isdigit() or iterative not in ['0', '1']:
-        iterative = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
+        # Wil je iteratief doen?
+        iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
 
-    if iterative == "0":
-        attempts = input("How many times do you want to iterate? ")
+        while not iterative.isdigit() or iterative not in ['0', '1']:
+            iterative = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
 
-        while not attempts.isdigit():
-            attempts = input("Input is not an integer, try again: ")
+        if iterative == "0":
+            attempts = input("How many times do you want to iterate? ")
 
-        attempts = int(attempts)
-        print("Running iterative algorithm, please wait...")
-        start_time = time.time()
+            while not attempts.isdigit():
+                attempts = input("Input is not an integer, try again: ")
 
-        for pogingen in range(attempts):
-            grid = hill_climber_algorithm(best_grid)
+            attempts = int(attempts)
+            print("Running iterative algorithm, please wait...")
+            start_time = time.time()
 
-            if grid is not None:
-                best_grid = grid
-                final_best_price = best_grid.get_total_price()
+            for pogingen in range(attempts):
+                grid = hill_climber_algorithm(best_grid)
 
-        print(f"Cost found: {final_best_price}")
-        print("--- %s seconds runtime ---" % (time.time() - start_time))
+                if grid is not None:
+                    best_grid = grid
+                    final_best_price = best_grid.get_total_price()
+
+            print(f"Cost found: {final_best_price}")
+            print("--- %s seconds runtime ---" % (time.time() - start_time))
+
+    # elif sys_algorithm == '3':
+    #
+    #     # Wil je iteratief doen?
+    #     try_steiner = input("Do you want to try steiner graph reconfiguration?\nYes: [0]\nNo: [1]\n")
+    #
+    #     while not try_steiner.isdigit() or try_steiner not in ['0', '1']:
+    #         try_steiner = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
+    #
+    #     if try_steiner == "0":
+    #         print("Running steiner algorithm, please wait...")
+    #         start_time = time.time()
+    #
+    #         steiner(best_grid)
+
 
     draw(best_grid)
 

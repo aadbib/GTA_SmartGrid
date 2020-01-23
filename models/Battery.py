@@ -1,4 +1,5 @@
 # Model voor Batterij
+
 class Battery:
 
     battery_price = 5000
@@ -43,7 +44,8 @@ class Battery:
                 self.__unique_cables.add(c)
 
     def set_house(self, house):
-        self.__houses.append(house)
+        if house not in self.__houses:
+            self.__houses.append(house)
 
     def remove_house(self, index):
         house = self.__houses[index]
@@ -101,6 +103,9 @@ class Battery:
                 self.set_unique_cable((house_x - movement, battery_y))
 
         self.set_house(house)
+
+    def sort_houses_y(self):
+        self.__houses.sort(key=lambda house:int(house.get_location()[1]))
 
     # toString()
     def __str__(self):
