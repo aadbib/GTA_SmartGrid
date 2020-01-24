@@ -14,6 +14,10 @@ class Grid:
 
     def __init__(self, neighbourhood, house_file, battery_file):
         self.__neighbourhood = neighbourhood
+
+        # Alleen voor steiner algoritme gebruikt
+        self.__segmenten = []
+
         self.__batteries = []
         self.__houses = []
         self.load_objects(house_file, battery_file)
@@ -60,13 +64,32 @@ class Grid:
     def get_batteries(self):
         return self.__batteries
 
+    def set_battery(self, battery):
+        self.__batteries.append(battery)
+
     def get_houses(self):
         return self.__houses
+
+    def clear_all_cables_batteries(self):
+        for battery in self.__batteries:
+            houses = battery.get_houses()
+
+            for house in houses:
+                house.clear_cables()
 
     def clear_unique_cables_batteries(self):
         for battery in self.__batteries:
             battery.clear_unique_cables()
 
+    def clear_batteries(self):
+        self.__batteries.clear()
+
+    def get_segmenten(self):
+        return self.__segmenten
+
+    def set_segment(self, segment):
+        self.__segmenten.append(segment)
+
+    # toString()
     def __str__(self):
-        # toString()
         return f"Grid voor de wijk: {self.__neighbourhood},\nHuizen: {self.__houses},\nBatterijen: {self.__batteries}"
