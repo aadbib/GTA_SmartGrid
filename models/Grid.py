@@ -2,6 +2,7 @@
 import csv
 from .House import House
 from .Battery import Battery
+import json
 
 # Model Grid
 class Grid:
@@ -14,10 +15,7 @@ class Grid:
 
     def __init__(self, neighbourhood, house_file, battery_file):
         self.__neighbourhood = neighbourhood
-
-        # Alleen voor steiner algoritme gebruikt
         self.__segmenten = []
-
         self.__batteries = []
         self.__houses = []
         self.ending_x = 50
@@ -92,6 +90,18 @@ class Grid:
     def set_segment(self, segment):
         self.__segmenten.append(segment)
 
+    def write_output(self, file):
+        json_file = open(file, 'w')
+        json_output = []
+
+        for battery in self.__batteries:
+
+            info = battery.dictify()
+            json_output.append(info)
+
+        json_file.write(json.dumps(json_output, indent=2))
+
+
     # toString()
     def __str__(self):
-        return f"Grid voor de wijk: {self.__neighbourhood},\nHuizen: {self.__houses},\nBatterijen: {self.__batteries}"
+        return f"{self.__batteries}"

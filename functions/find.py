@@ -8,18 +8,14 @@ def find_house(battery, houses):
     for index, house in enumerate(houses):
         output_house = house.get_output()
 
-        try:
-            distance_house = house.distance(battery)
+        distance_house = house.distance(battery)
 
-            if distance_house < min_distance:
-                remaining = battery.get_remaining()
+        if distance_house < min_distance:
+            remaining = battery.get_remaining()
 
-                if remaining >= output_house:
-                    optimal_index = index
-                    min_distance = distance_house
-
-        except IndexError:
-            pass
+            if remaining >= output_house:
+                optimal_index = index
+                min_distance = distance_house
 
     # Als de output niet meer voloet, return dan niks (en niet de 1e huis van huizen met index 0)
     try:
@@ -42,18 +38,14 @@ def find_battery(batteries, house):
     output_house = house.get_output()
 
     for index, battery in enumerate(batteries):
-        try:
-            distance_battery = house.distance(battery)
+        distance_battery = house.distance(battery)
 
-            if distance_battery < min_distance:
-                remaining = battery.get_remaining()
+        if distance_battery < min_distance:
+            remaining = battery.get_remaining()
 
-                if remaining >= output_house:
-                    optimal_index = index
-                    min_distance = distance_battery
-
-        except IndexError:
-            pass
+            if remaining >= output_house:
+                optimal_index = index
+                min_distance = distance_battery
 
     return batteries[optimal_index]
 
