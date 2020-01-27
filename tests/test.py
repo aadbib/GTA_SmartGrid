@@ -146,7 +146,6 @@ def main():
             print(f"Cost found: {final_best_price}")
             print("--- %s seconds runtime ---" % (time.time() - start_time))
 
-<<<<<<< HEAD
     # elif sys_algorithm == '3':
     #
     #     # Wil je iteratief doen?
@@ -185,8 +184,6 @@ def main():
     print(counter)
 
 
-=======
->>>>>>> test
     draw(best_grid)
 
 if __name__=="__main__":

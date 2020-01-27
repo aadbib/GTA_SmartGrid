@@ -30,6 +30,7 @@ Waarbij:
 * **/GTA_SmartGrid:** bevat alle code van dit project
     * **/GTA_SmartGrid/algorithms:** bevat de code voor alle algoritmes
     * **/GTA_SmartGrid/data:** bevat de huizen- en batterijengegevens van alledrie wijken
+    * **/GTA_SmartGrid/functions:** bevat allerlei toegepaste functies
     * **/GTA_SmartGrid/images:** bevat roostericoontjes
     * **/GTA_SmartGrid/models:** bevat de vier benodigde klassen voor deze casus
     * **/GTA_SmartGrid/visualisation:** bevat de code voor de visualisatie
@@ -68,3 +69,7 @@ sluit alle dichtstbijzijndste huizen aan de buitenste batterij met resterende ca
 * George Soroko
 * Tom van Esseveld
 * Achraf Adbib
+
+## Dankbetuigingen
+
+Quinten van der Post voor advies en toezicht.
