@@ -6,7 +6,7 @@ from .Battery import Battery
 # Model Grid
 class Grid:
 
-    # Static attributen
+    # Statische attributen
     big_steps = 10
     small_steps = 1
     start_axis = -1
@@ -20,6 +20,8 @@ class Grid:
 
         self.__batteries = []
         self.__houses = []
+        self.ending_x = 50
+        self.ending_y = 50
         self.load_objects(house_file, battery_file)
 
     def load_objects(self, *argv):

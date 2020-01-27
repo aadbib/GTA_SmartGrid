@@ -1,5 +1,9 @@
 class Segment:
+
+    # Statische attributen
     id = 0
+    x_size = 10
+    y_size = 10
 
     def __init__(self, sp, ep):
         self.__starting_point = sp
