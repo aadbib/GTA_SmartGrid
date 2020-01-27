@@ -1,5 +1,6 @@
 class Battery:
 
+    # Statische attributen
     battery_price = 5000
     price_cable = 9
 
@@ -101,6 +102,7 @@ class Battery:
 
         self.set_house(house)
 
+    # Functie: Zet gegevens om in JSON-formaat
     def dictify(self):
         json_dict = {}
         json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'

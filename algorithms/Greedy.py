@@ -9,8 +9,10 @@ class Greedy:
     @staticmethod
     def dist_cap_algorithm(grid):
         """
-        Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit, waarbij de output in de capaciteit past
+            Algoritme die 'random' de huizen aan de zo dichtbijzijnste batterij aansluit,
+            waarbij de output in de capaciteit past
         """
+
         houses = grid.get_houses()
         batteries = grid.get_batteries()
 
@@ -23,9 +25,8 @@ class Greedy:
 
     @staticmethod
     def best_dist_no_capacity_restrictions(grid):
-        """
-        Algoritme die de slechtse batterij voor een huis linkt
-        """
+        """Algoritme die de slechtse batterij voor een huis linkt"""
+
         houses = grid.get_houses()
         batteries = grid.get_batteries()
         for house in houses:
@@ -36,57 +37,40 @@ class Greedy:
     @staticmethod
     def best_dist_no_cap_shared_cable(grid):
         """
-        Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
+            Algoritme die ook naar bestaande gelegde kabels kijkt,
+            en de de kabel/batterij kiest met minste afstand
         """
+
         houses = grid.get_houses()
         batteries = grid.get_batteries()
-
         randomize_objects(houses, batteries)
 
-        # Voor huis in huizen
         for house in houses:
 
-            # Zoek de dichtsbijzijndste batterij
+            # Initialiseer variabelen voor bepaling batterij gegevens
             battery = find_best_battery(batteries, house)
-
-            # Bereken de afstand tussen de beste batterij en huis
             distance_battery = house.distance(battery)
-
-            # Base-line afstand kabel (Upper-bound)
             best_distance_cable = 1000000
-
-            # Declaratie beste kabel
             best_cable = tuple
 
-            # Loop door de batterijen array
             for b in batteries:
 
-                # Pak de unieke kabels die aan de batterij is aangesloten
                 cables = b.get_unique_cables()
-
-                # Loop door deze unieke kabels
                 for c in cables:
                     distance_cable = house.distance(c)
 
                     # Als de afstand van de kabel beter is dan de beste afstand die geconstateerd is
                     if distance_cable < best_distance_cable:
-                        # Zet dan dan deze kabel als de beste
                         best_distance_cable = distance_cable
-
-                        # Onthoud de tuple/locatie van deze kabel
                         best_cable = c
-
-                        # Onthoud van welke batterij deze kabel komt
                         battery_cable = b
 
-            # Als de afstand van deze kabel dichterbijer ligt dan de afstand van de dichtsbijzijnste batterij
+            # Controleer afstand kabel met dichtsbijzijnste batterij, beter: sluit aan
             if best_distance_cable < distance_battery:
                 battery_cable.set_house(house)
-
-                # Leg kabel vanuit huis naar deze dichtsbijzijndste kabel
                 house.lay_cable_to_cable(best_cable, battery_cable)
 
-            # Anders sluit aan de dichtsbijzijnste batterij
+            # Anders: sluit aan dichtsbijzijnste batterij
             else:
                 battery.lay_cable_to_house(house)
 
@@ -94,8 +78,11 @@ class Greedy:
     @staticmethod
     def bat_dist_cap_algorithm(grid):
         """
-        Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit, waarbij de output in de capaciteit past
+            Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit,
+            waarbij de output in de capaciteit past
         """
+
+        # Verkrijg huizen en batterijen, schud ze, en pak kopie van huizen
         houses = grid.get_houses()
         batteries = grid.get_batteries()
         randomize_objects(houses, batteries)
@@ -117,66 +104,46 @@ class Greedy:
     @staticmethod
     def rand_cable_dist_cap(grid):
         """
-        Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
+            Algoritme die ook naar bestaande gelegde kabels kijkt,
+            en de de kabel/batterij kiest met minste afstand
         """
+
+        # Verkrijg huizen en batterijen en schud ze
         houses = grid.get_houses()
         batteries = grid.get_batteries()
-
         randomize_objects(houses, batteries)
 
-        # Voor huis in huizen
         for house in houses:
 
-            # Zoek de dichtsbijzijndste batterij
+            # Zoek dichtsbijzijndste batterij, bepaal afstand, en houd bij met afstand kabel
             battery = find_battery(batteries, house)
-
-            # Bereken de afstand tussen de beste batterij en huis
             distance_battery = house.distance(battery)
-
-            # Base-line afstand kabel (Upper-bound)
             best_distance_cable = 1000000
-
-            # Declaratie beste kabel
             best_cable = tuple
 
-            # Loop door de batterijen array
             for b in batteries:
 
-                # Pak de resterende capaciteit van elke batterij
+                # Pak resterende capaciteit batterij
                 remaining = b.get_remaining()
 
-                # Als de batterij uberhaupt verbindingen heeft, anders prune
+                # Condities op kabels en output, prune als niet voldoet
                 if not b.is_empty():
-
-                    # Als de batterij capaciteit nog voldoet, anders prune
                     if remaining >= house.get_output():
-
-                        # Pak de unieke kabels die aan de batterij is aangesloten
                         cables = b.get_unique_cables()
 
-                        # Loop door deze unieke kabels
                         for c in cables:
                             distance_cable = house.distance(c)
 
-                            # Als de afstand van de kabel beter is dan de beste afstand die geconstateerd is
+                            # Is er een kabel dichterbijer, sla dit op en onthoud gegevens
                             if distance_cable < best_distance_cable:
-
-                                # Zet dan deze kabel als de beste
                                 best_distance_cable = distance_cable
-
-                                # Onthoud de tuple/locatie van deze kabel
                                 best_cable = c
-
-                                # Onthoud van welke batterij deze kabel komt
                                 battery_cable = b
 
-            # Als de afstand van deze kabel dichterbijer ligt dan de afstand van de dichtsbijzijnste batterij
+            # Conditie: controleer afstand batterij en kabel, en selecteert minste afstand
             if best_distance_cable < distance_battery:
                 battery_cable.set_house(house)
-
-                # Leg kabel vanuit huis naar deze dichtsbijzijndste kabel
                 house.lay_cable_to_cable(best_cable, battery_cable)
 
-            # Anders sluit aan de dichtsbijzijnste batterij
             else:
                 battery.lay_cable_to_house(house)
