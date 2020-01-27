@@ -74,9 +74,22 @@ class House:
                 self.set_cables((cable_x - movement, house_y))
                 battery.set_unique_cable((cable_x - movement, house_y))
 
+    def dictify(self):
+        json_dict = {}
+        json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'
+        json_dict["output"] = self.__output
+
+        cables_json = []
+        for cable in self.__cables:
+            cables_json.append(f"({cable[0]},{cable[1]})")
+
+        json_dict["cables"] = cables_json
+
+        return json_dict
+
     # toString()
     def __str__(self):
-        return f'Location: {self.__location}, Output: {self.__output}, Cables: {self.__cables}'
+        return f'location: {self.__location}, output: {self.__output}, cables: {self.__cables}'
 
     def __repr__(self):
-        return f'Location: {self.__location}' 
+        return f'Location: {self.__location}, Output: {self.__output}, Cables: {self.__cables}'

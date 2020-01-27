@@ -1,5 +1,3 @@
-# Model voor Batterij
-
 class Battery:
 
     battery_price = 5000
@@ -103,12 +101,23 @@ class Battery:
 
         self.set_house(house)
 
+    def dictify(self):
+        json_dict = {}
+        json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'
+        json_dict["capacity"] = self.__capacity
+        json_dict["houses"] = []
+
+        for house in self.__houses:
+             json_dict["houses"].append(house.dictify())
+
+        return json_dict
+
     def sort_houses_y(self):
         self.__houses.sort(key=lambda house:int(house.get_location()[1]))
 
     # toString()
     def __str__(self):
-        return f'Location: {self.__location}, Capacity: {self.__capacity}, Houses: {self.__houses}, Remaining: {self.get_remaining()}'
+        return f'Location: {self.__location}, Capacity: {self.__capacity}, Houses: {self.__houses}'
 
     def __repr__(self):
-        return f'Location: {self.__location}'
+        return f'Location: {self.__location}, Capacity: {self.__capacity}, Houses: {self.__houses}'
