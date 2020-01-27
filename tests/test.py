@@ -146,6 +146,7 @@ def main():
             print(f"Cost found: {final_best_price}")
             print("--- %s seconds runtime ---" % (time.time() - start_time))
 
+    best_grid.write_output(f"../data/wijk{neighbourhood}_algoritme_{sys_algorithm}.json")
     draw(best_grid)
 
 if __name__=="__main__":
