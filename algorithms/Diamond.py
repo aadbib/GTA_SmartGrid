@@ -5,14 +5,13 @@ from functions.segmenting import segmenting_grid
 from functions.fit import fit_house_in_diamond
 
 class Diamond:
-    """
-    Diamond algoritme
-    """
+    """Diamond algoritme"""
 
     @staticmethod
     def diamond_bat_dist_cap(grid):
         """
-        Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit, waarbij de output in de capaciteit past
+            Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit,
+            waarbij de output in de capaciteit past
         """
         houses = grid.get_houses()
         batteries = grid.get_batteries()
@@ -38,7 +37,7 @@ class Diamond:
     @staticmethod
     def diamond_sorting_batteries(grid):
         """
-        Algoritme die de batterijen sorteert, zodat batterijen op een diamante manier aangesloten worden
+            Algoritme die de batterijen sorteert, zodat batterijen op een diamante manier aangesloten worden
         """
 
         segment_order = [0, 20, 24, 4, 1, 5, 15, 21, 23, 19, 9, 3, 2, 6, 10, 16, 22, 18, 14, 8, 7, 11, 17, 13, 12]
@@ -55,52 +54,37 @@ class Diamond:
     @staticmethod
     def diamond_lay_cables(grid):
         """
-        Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
+            Algoritme die ook naar bestaande gelegde kabels kijkt,
+            en de de kabel/batterij kiest met minste afstand
         """
 
         batteries = grid.get_batteries()
 
-        # Voor batterij in batterijen
         for battery in batteries:
             houses = battery.get_houses()
 
             for house in houses:
 
-                # Bereken de afstand tussen de beste batterij en huis
                 distance_battery = house.distance(battery)
-
-                # Base-line afstand kabel (Upper-bound)
                 best_distance_cable = 1000000
-
-                # Declaratie beste kabel
                 best_cable = tuple
 
-                # Als de batterij uberhaupt verbindingen heeft, anders prune
+                # Als de batterij uberhaupt verbindingen heeft, pak kabels, anders prune
                 if not battery.is_empty():
-
-                    # Pak de unieke kabels die aan de batterij is aangesloten
                     cables = battery.get_unique_cables()
 
-                    # Loop door deze unieke kabels
                     for c in cables:
                         distance_cable = house.distance(c)
 
-                        # Als de afstand van de kabel beter is dan de beste afstand die geconstateerd is
+                        # Als het kan, wijzig beste kabel en afstand
                         if distance_cable < best_distance_cable:
-
-                            # Zet dan deze kabel als de beste
                             best_distance_cable = distance_cable
-
-                            # Onthoud de tuple/locatie van deze kabel
                             best_cable = c
 
-                # Als de afstand van deze kabel dichterbijer ligt dan de afstand van de dichtsbijzijnste batterij
+                # Conditie: controleer afstand batterij en kabel, en selecteert minste afstand
                 if best_distance_cable < distance_battery:
-
-                    # Leg kabel vanuit huis naar deze dichtsbijzijndste kabel
                     house.lay_cable_to_cable(best_cable, battery)
 
-                # Anders sluit aan de dichtsbijzijnste batterij
                 else:
                     battery.lay_cable_to_house(house)
 

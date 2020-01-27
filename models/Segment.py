@@ -5,6 +5,7 @@ class Segment:
     x_size = 10
     y_size = 10
 
+    # Constructor & attributen
     def __init__(self, sp, ep):
         self.__starting_point = sp
         self.__end_point = ep
@@ -12,6 +13,7 @@ class Segment:
         self.__id = Segment.id
         Segment.id += 1
 
+    # Getters & setters
     def get_starting_point(self):
             return self.__starting_point
 
@@ -31,7 +33,7 @@ class Segment:
         self.__battery = battery
 
     def __str__(self):
-        return f"{self.__id}: {self.__starting_point} - {self.__end_point}, {self.__has_battery}"
+        return f"{self.__id}: {self.__starting_point} - {self.__end_point}, {self.__battery}"
 
     def __repr__(self):
         return f"{self.__id}: {self.__battery}"

@@ -58,6 +58,7 @@ def main():
         print("You have to give an integer")
         exit(1)
 
+    # Map input-waarde aan functie-referenties
     algorithms = {
         '1': random_algorithm,
         '2': greedy_no_shared,
@@ -70,6 +71,7 @@ def main():
     }
     algorithm = algorithms[sys_algorithm]
 
+    # Map functie referenties met wel/geen gedeelde kabels
     algorithms_shared_cable = {
         random_algorithm: False,
         greedy_no_shared: False,
@@ -93,10 +95,9 @@ def main():
 
     """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
-    # Base-line worst-case, best-case
+    # Base-line worst-case, best-case, houd gegevens bij
     worst_price = 0
     final_best_price = 1000000
-
     best_grid = None
     print("Running algorithm, please wait...")
     start_time = time.time()
@@ -118,9 +119,8 @@ def main():
     print(f"Lowest cost found: {final_best_price}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
 
+    # Wil je iteratief doen?
     if int(sys_algorithm) < 3:
-
-        # Wil je iteratief doen?
         iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
 
         while not iterative.isdigit() or iterative not in ['0', '1']:
