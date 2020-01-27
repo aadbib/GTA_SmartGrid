@@ -2,7 +2,6 @@
 import sys
 import os
 import time
-from copy import deepcopy
 
 # Zet root-pad goed om de modules vanaf CLI te laden
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -11,15 +10,24 @@ sys.path.append(root_path)
 
 # Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
-from algorithms.randomize_dist_cap import dist_cap_algorithm
-from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
-from algorithms.randomize import rand_one_to_one_algorithm
-from algorithms.worst_dist import worst_dist_no_capacity_restrictions
-from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
-from algorithms.bat_randomize_dist_cap import bat_dist_cap_algorithm
-from algorithms.hill_climber import hill_climber_algorithm
-from algorithms.diamond_dist_cap_cable import diamond_dist_cap_cable
+from algorithms.Random import Random
+from algorithms.Greedy import Greedy
+from algorithms.Worst import Worst
+from algorithms.Diamond import Diamond
+from algorithms.Hillclimber import Hillclimber
 from visualisation.plot_grid import draw
+
+
+# Variabele die functie-referenties van de algoritmen opslaan
+random_algorithm = Random.rand_one_to_one_algorithm
+greedy_no_shared = Greedy.dist_cap_algorithm
+greedy_shared = Greedy.rand_cable_dist_cap
+greedy_no_shared_restrict_off = Greedy.best_dist_no_capacity_restrictions
+greedy_shared_restrict_off = Greedy.best_dist_no_cap_shared_cable
+greedy_bat_no_shared = Greedy.bat_dist_cap_algorithm
+worst_algorithm = Worst.worst_dist_no_capacity_restrictions
+diamond_algorithm = Diamond.diamond_dist_cap_cable
+hill_climber = Hillclimber.hill_climber_algorithm
 
 
 # Main functie
@@ -51,30 +59,30 @@ def main():
         exit(1)
 
     algorithms = {
-        '1': rand_one_to_one_algorithm,
-        '2': dist_cap_algorithm,
-        '3': rand_cable_dist_cap,
-        '4': worst_dist_no_capacity_restrictions,
-        '5': best_dist_no_capacity_restrictions,
-        '6': best_dist_no_cap_shared_cable,
-        '7': bat_dist_cap_algorithm,
-        '8': diamond_dist_cap_cable
+        '1': random_algorithm,
+        '2': greedy_no_shared,
+        '3': greedy_shared,
+        '4': worst_algorithm,
+        '5': greedy_no_shared_restrict_off,
+        '6': greedy_shared_restrict_off,
+        '7': greedy_bat_no_shared,
+        '8': diamond_algorithm
     }
     algorithm = algorithms[sys_algorithm]
 
-    """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
     algorithms_shared_cable = {
-        rand_one_to_one_algorithm: False,
-        dist_cap_algorithm: False,
-        rand_cable_dist_cap: True,
-        worst_dist_no_capacity_restrictions: [True, False],
-        best_dist_no_capacity_restrictions: False,
-        best_dist_no_cap_shared_cable: True,
-        bat_dist_cap_algorithm: False,
-        diamond_dist_cap_cable: True
+        random_algorithm: False,
+        greedy_no_shared: False,
+        greedy_shared: True,
+        worst_algorithm: [True, False],
+        greedy_no_shared_restrict_off: False,
+        greedy_shared_restrict_off: True,
+        greedy_bat_no_shared: False,
+        diamond_algorithm: True
     }
 
-    if algorithm == worst_dist_no_capacity_restrictions:
+    # Worst algoritme kan zowel met als zonder gedeelde kabels, dus vraag welke
+    if algorithm == worst_algorithm:
         shared_question = input("Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
         while shared_question not in ['0', '1']:
             shared_question = input("Try again: Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
@@ -83,17 +91,17 @@ def main():
     else:
         shared = algorithms_shared_cable[algorithm]
 
+    """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
+
     # Base-line worst-case, best-case
     worst_price = 0
     final_best_price = 1000000
 
     best_grid = None
-
     print("Running algorithm, please wait...")
     start_time = time.time()
 
     for attempt in range(attempts):
-        # Als niet iteratief:
         grid = Grid(neighbourhood, f"{root_path}/data/wijk{neighbourhood}_huizen.csv", f"{root_path}/data/wijk{neighbourhood}_batterijen.csv")
         price_determination = grid.get_unique_total_price if shared else grid.get_total_price
         algorithm(grid)
@@ -129,15 +137,16 @@ def main():
             start_time = time.time()
 
             for pogingen in range(attempts):
-                grid = hill_climber_algorithm(best_grid)
+                grid = hill_climber(best_grid)
 
-                if grid is not None:
+                if grid:
                     best_grid = grid
                     final_best_price = best_grid.get_total_price()
 
             print(f"Cost found: {final_best_price}")
             print("--- %s seconds runtime ---" % (time.time() - start_time))
 
+<<<<<<< HEAD
     # elif sys_algorithm == '3':
     #
     #     # Wil je iteratief doen?
@@ -176,6 +185,8 @@ def main():
     print(counter)
 
 
+=======
+>>>>>>> test
     draw(best_grid)
 
 if __name__=="__main__":
