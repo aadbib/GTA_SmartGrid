@@ -152,6 +152,29 @@ def main():
     #
     #         steiner(best_grid)
 
+    batteries = best_grid.get_batteries()
+    
+    # for battery in batteries_best_grid:
+    #     print(battery)
+
+    # printformat = 
+    # [
+    #     {
+    #     battery
+    #         [
+    #     {houses}
+    #         ]
+    #     }
+    # ]
+    counter = 0
+    for battery in batteries:
+        print(battery.get_remaining())
+        houses = battery.get_houses()
+        for house in houses:
+            counter += 1
+
+    print(counter)
+
 
     draw(best_grid)
 

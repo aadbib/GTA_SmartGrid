@@ -60,6 +60,77 @@ def diamond_bat_dist_cap(grid):
             else:
                 break
 
+    # # Fixen van huizen die niet bij een batterij passen
+    # print(len(houses_copy))            
+    # print(houses_copy[0])
+
+    # Als er nog een huis over is, los dit op
+    if len(houses_copy) >= 1:
+        capacity_missing_house = houses_copy[0].get_output()
+        index_battery = None
+        battery_with_most_capacity = 0
+
+        # Pak de batterij met de meeste resterende capaciteit
+        for index, battery in enumerate(batteries):
+            remaining_battery = battery.get_remaining()
+
+            if battery_with_most_capacity < remaining_battery:
+                battery_with_most_capacity = remaining_battery
+                index_battery = index
+        
+        # Kijk naar de huizen in de eerst batterij
+        houses_first_battery = batteries[index_battery].get_houses()
+        index_house = None 
+        house_most_output = 0
+        
+        # Pak het huis met de hoogste output
+        for index, house in enumerate(houses_first_battery):
+            output_house = house.get_output()
+
+            if house_most_output < output_house:
+                house_most_output = output_house
+                index_house = index
+
+        second_battery_index = None
+        second_most_battery_capacity = 0
+
+        # Pak de batterij met daarna de meeste resterende capaciteit
+        for index, battery in enumerate(batteries):
+            remaining_battery = battery.get_remaining()
+            
+            if second_most_battery_capacity < remaining_battery and index_battery is not index:
+                second_most_battery_capacity = remaining_battery
+                second_battery_index = index
+
+        # Kijk naar de huizen in de tweede batterij
+        houses_second_battery = batteries[second_battery_index].get_houses()
+        second_index_house = None 
+        second_house_output = 100
+        
+        # Pak het huis met een output dat ervoor zorgt dat missende huis past
+        for index, house in enumerate(houses_second_battery):
+            output_house = house.get_output()
+
+            # Let hierop dat de eerste en tweede batterij de wissel aankunnen en dat er in één wissel genoeg ruimte is voor het missende huis
+            if (house_most_output - output_house) < second_most_battery_capacity and (battery_with_most_capacity + (house_most_output - output_house)) > capacity_missing_house:
+                second_house_output = output_house
+                second_index_house = index
+                break
+
+        # # Als er geen passend huis wordt, gevonden los dit op 
+        # if second_index_house is None:
+        #     pass
+
+        
+
+        print(house_most_output)
+        print(second_house_output)
+        print(houses_copy[0])
+        # swap houses AKA pop them both from their respected batteries and add them
+        # check output
+        # if the final house still doesnt fit in the battery with most capacity, do process again
+        # else there is your final grid        
+
 def diamond_sorting_batteries(grid):
     segment_order = [0, 20, 24, 4, 1, 5, 15, 21, 23, 19, 9, 3, 2, 6, 10, 16, 22, 18, 14, 8, 7, 11, 17, 13, 12]
 
