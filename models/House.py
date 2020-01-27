@@ -1,5 +1,5 @@
 from .Battery import Battery
-# Model voor Huis
+
 class House:
 
     price_cable = 9

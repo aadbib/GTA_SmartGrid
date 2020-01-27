@@ -9,7 +9,6 @@ class Battery:
     def __init__(self, loc, cap):
         self.__location = loc.replace('[', '').replace(']', '').replace(' ', '').split(',')
         self.__capacity = float(cap)
-        # Todo: Set maken, zodat je zeker weet dat huizen uniek aan batterij aangesloten zijn
         self.__houses = []
         self.__unique_cables = set({})
 
