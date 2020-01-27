@@ -10,19 +10,32 @@ sys.path.append(root_path)
 
 # Importeer grid, algoritmes en visualisatie
 from models.Grid import Grid
-from algorithms.randomize_dist_cap import dist_cap_algorithm
-from algorithms.randomize_cable_dist_cap import rand_cable_dist_cap
-from algorithms.randomize import rand_one_to_one_algorithm
-from algorithms.worst_dist import worst_dist_no_capacity_restrictions
-from algorithms.best_dist import best_dist_no_capacity_restrictions, best_dist_no_cap_shared_cable
+from algorithms.Random import Random
+from algorithms.Greedy import Greedy
+from algorithms.Worst import Worst
+from algorithms.Diamond import Diamond
+from algorithms.Hillclimber import Hillclimber
 from visualisation.plot_grid import draw
+
+
+# Variabele die functie-referenties van de algoritmen opslaan
+random_algorithm = Random.rand_one_to_one_algorithm
+greedy_no_shared = Greedy.dist_cap_algorithm
+greedy_shared = Greedy.rand_cable_dist_cap
+greedy_no_shared_restrict_off = Greedy.best_dist_no_capacity_restrictions
+greedy_shared_restrict_off = Greedy.best_dist_no_cap_shared_cable
+greedy_bat_no_shared = Greedy.bat_dist_cap_algorithm
+worst_algorithm = Worst.worst_dist_no_capacity_restrictions
+diamond_algorithm = Diamond.diamond_dist_cap_cable
+hill_climber = Hillclimber.hill_climber_algorithm
+
 
 # Main functie
 def main():
 
     # Moet argument wijk en pogingen meegeven
-    if len(sys.argv) != 5:
-        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen> <shared>")
+    if len(sys.argv) != 4:
+        print("Usage: python main.py <wijk_nummer> <algoritme> <pogingen>")
         exit(1)
 
     neighbourhood = str(sys.argv[1])
@@ -34,7 +47,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4', '5', '6']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7', '8']:
         print("No such algorithm!")
         exit(1)
 
@@ -45,33 +58,49 @@ def main():
         print("You have to give an integer")
         exit(1)
 
-    shared_arg = sys.argv[4]
-    if shared_arg not in ['0', '1']:
-        print("Shared must be 0 or 1")
-        exit(1)
-
     algorithms = {
-        '1': rand_one_to_one_algorithm,
-        '2': dist_cap_algorithm,
-        '3': rand_cable_dist_cap,
-        '4': worst_dist_no_capacity_restrictions,
-        '5': best_dist_no_capacity_restrictions,
-        '6': best_dist_no_cap_shared_cable
+        '1': random_algorithm,
+        '2': greedy_no_shared,
+        '3': greedy_shared,
+        '4': worst_algorithm,
+        '5': greedy_no_shared_restrict_off,
+        '6': greedy_shared_restrict_off,
+        '7': greedy_bat_no_shared,
+        '8': diamond_algorithm
     }
     algorithm = algorithms[sys_algorithm]
 
-    """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
+    algorithms_shared_cable = {
+        random_algorithm: False,
+        greedy_no_shared: False,
+        greedy_shared: True,
+        worst_algorithm: [True, False],
+        greedy_no_shared_restrict_off: False,
+        greedy_shared_restrict_off: True,
+        greedy_bat_no_shared: False,
+        diamond_algorithm: True
+    }
 
-    shared = True if shared_arg == '1' else False
+    # Worst algoritme kan zowel met als zonder gedeelde kabels, dus vraag welke
+    if algorithm == worst_algorithm:
+        shared_question = input("Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
+        while shared_question not in ['0', '1']:
+            shared_question = input("Try again: Do you want to implement shared-cable strategy?\nYes: [0]\nNo: [1]\n")
+        shared = algorithms_shared_cable[algorithm][int(shared_question)]
+
+    else:
+        shared = algorithms_shared_cable[algorithm]
+
+    """Algoritme kosten en run-time test, om de slechtste kosten en run-time in x pogingen te vinden"""
 
     # Base-line worst-case, best-case
     worst_price = 0
     final_best_price = 1000000
 
     best_grid = None
-
     print("Running algorithm, please wait...")
     start_time = time.time()
+
     for attempt in range(attempts):
         grid = Grid(neighbourhood, f"{root_path}/data/wijk{neighbourhood}_huizen.csv", f"{root_path}/data/wijk{neighbourhood}_batterijen.csv")
         price_determination = grid.get_unique_total_price if shared else grid.get_total_price
@@ -89,6 +118,35 @@ def main():
     print(f"Lowest cost found: {final_best_price}")
     print("--- %s seconds runtime ---" % (time.time() - start_time))
 
+    if int(sys_algorithm) < 3:
+
+        # Wil je iteratief doen?
+        iterative = input("Do you want to run an iterative function?\nYes: [0]\nNo: [1]\n")
+
+        while not iterative.isdigit() or iterative not in ['0', '1']:
+            iterative = input("Input is not valid, try again:\nYes: [0]\nNo: [1]\n")
+
+        if iterative == "0":
+            attempts = input("How many times do you want to iterate? ")
+
+            while not attempts.isdigit():
+                attempts = input("Input is not an integer, try again: ")
+
+            attempts = int(attempts)
+            print("Running iterative algorithm, please wait...")
+            start_time = time.time()
+
+            for pogingen in range(attempts):
+                grid = hill_climber(best_grid)
+
+                if grid:
+                    best_grid = grid
+                    final_best_price = best_grid.get_total_price()
+
+            print(f"Cost found: {final_best_price}")
+            print("--- %s seconds runtime ---" % (time.time() - start_time))
+
+    best_grid.write_output(f"../data/wijk{neighbourhood}_algoritme_{sys_algorithm}.json")
     draw(best_grid)
 
 if __name__=="__main__":

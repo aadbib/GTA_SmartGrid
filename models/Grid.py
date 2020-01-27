@@ -2,11 +2,12 @@
 import csv
 from .House import House
 from .Battery import Battery
+import json
 
 # Model Grid
 class Grid:
 
-    # Static attributen
+    # Statische attributen
     big_steps = 10
     small_steps = 1
     start_axis = -1
@@ -14,8 +15,11 @@ class Grid:
 
     def __init__(self, neighbourhood, house_file, battery_file):
         self.__neighbourhood = neighbourhood
+        self.__segmenten = []
         self.__batteries = []
         self.__houses = []
+        self.ending_x = 50
+        self.ending_y = 50
         self.load_objects(house_file, battery_file)
 
     def load_objects(self, *argv):
@@ -60,13 +64,44 @@ class Grid:
     def get_batteries(self):
         return self.__batteries
 
+    def set_battery(self, battery):
+        self.__batteries.append(battery)
+
     def get_houses(self):
         return self.__houses
+
+    def clear_all_cables_batteries(self):
+        for battery in self.__batteries:
+            houses = battery.get_houses()
+
+            for house in houses:
+                house.clear_cables()
 
     def clear_unique_cables_batteries(self):
         for battery in self.__batteries:
             battery.clear_unique_cables()
 
+    def clear_batteries(self):
+        self.__batteries.clear()
+
+    def get_segmenten(self):
+        return self.__segmenten
+
+    def set_segment(self, segment):
+        self.__segmenten.append(segment)
+
+    def write_output(self, file):
+        json_file = open(file, 'w')
+        json_output = []
+
+        for battery in self.__batteries:
+
+            info = battery.dictify()
+            json_output.append(info)
+
+        json_file.write(json.dumps(json_output, indent=2))
+
+
+    # toString()
     def __str__(self):
-        # toString()
-        return f"Grid voor de wijk: {self.__neighbourhood},\nHuizen: {self.__houses},\nBatterijen: {self.__batteries}"
+        return f"{self.__batteries}"
