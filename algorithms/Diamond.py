@@ -2,6 +2,7 @@
 from copy import deepcopy
 from functions.find import find_house
 from functions.segmenting import segmenting_grid
+from functions.fit import fit_house_in_diamond
 
 class Diamond:
     """
@@ -15,7 +16,6 @@ class Diamond:
         """
         houses = grid.get_houses()
         batteries = grid.get_batteries()
-
         houses_copy = deepcopy(houses)
 
         for battery in batteries:
@@ -24,12 +24,15 @@ class Diamond:
             while True:
                 house = find_house(battery, houses_copy)
 
-                # Todo: Check of is not None weg kan
-                if house is not None:
+                if house:
                     battery.set_house(house)
 
                 else:
                     break
+
+        # Als er nog een huis over is, los dit op
+        if len(houses_copy) >= 1:
+            fit_house_in_diamond(houses_copy, batteries)
 
 
     @staticmethod
@@ -44,8 +47,7 @@ class Diamond:
         for order in segment_order:
             segment = grid_segmenten[order]
 
-            # todo: CHECK OF is not None eruit kan
-            if segment.get_battery() is not None:
+            if segment.get_battery():
                 battery = segment.get_battery()
                 grid.set_battery(battery)
 

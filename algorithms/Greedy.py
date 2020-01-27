@@ -107,7 +107,7 @@ class Greedy:
             while True:
                 house = find_house(battery, houses_copy)
 
-                if house is not None:
+                if house:
                     battery.lay_cable_to_house(house)
 
                 else:

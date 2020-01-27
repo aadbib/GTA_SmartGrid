@@ -139,7 +139,7 @@ def main():
             for pogingen in range(attempts):
                 grid = hill_climber(best_grid)
 
-                if grid is not None:
+                if grid:
                     best_grid = grid
                     final_best_price = best_grid.get_total_price()
 
