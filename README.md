@@ -8,7 +8,7 @@ Groene energie is de energie van de toekomst, en zelf produceren is de mode van 
 ### Vereisten
 Alle code is geschreven in Python 3.7. Om een wijkrooster te kunnen tekenen moet er mathplotlib bibliotheek geïnstalleerd worden. Alle uitleg daarover bevindt zich in requirements.txt. Hierbij een korte instructie:
 
-> pip install -r requirements.txt
+` pip install -r requirements.txt `
 
 ### Gebruik
 Het programma wordt gestart door het volgende aan te roepen:
@@ -52,14 +52,14 @@ De opdracht heeft twee delen:
 * Segment: stelt een segment-object op aan de hand van start- en eind-coördinaten. Wordt gebruikt bij Diamond-algoritme met een batterij als een "instance".
 * Grid: stelt een grid-object op met alle huizen en batterijen erin.
 
-## Algoritmen
+## Algoritmes
 
 * Random:
 sluit een willekeurig huis aan een willekeurige batterij
 * Greedy:
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit
 * Hillclimber (bordurend op Random en Greedy):
-verbetert de voornoemde twee algoritmen door twee willekeurige huizen van twee willekeurige batterijen te wisselen, controlerend of er een verbetering mogelijk is
+verbetert de voornoemde twee algoritmes door twee willekeurige huizen van twee willekeurige batterijen te wisselen, controlerend of er een verbetering mogelijk is
 * Shared_Greedy:
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 * Diamond:
