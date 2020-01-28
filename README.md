@@ -25,8 +25,7 @@ Waarbij:
     * 5: Kostenondergrens als kabels niet gedeeld zijn
     * 6: Kostenondergrens als kabels gedeeld zijn
     * 7: Switchup
-    * 8: Shared_Switchup
-    * 9: Diamond
+    * 8: Diamond
 
 * <"pogingen"> staat voor het aantal iteraties waarmee een bepaald algoritme zich herhaalt
 
@@ -69,8 +68,6 @@ verbetert de voornoemde twee algoritmes door twee willekeurige huizen van twee w
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 * **Switchup**:
 sluit alle dichtstbijzijndste huizen aan een willekeurige batterij met resterende capaciteit
-* **Shared_Switchup**:
-sluit alle dichtstbijzijndste huizen aan een willekeurige batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 * **Diamond**:
 sluit alle dichtstbijzijndste huizen aan de buitenste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 
