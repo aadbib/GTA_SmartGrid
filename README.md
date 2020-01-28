@@ -56,31 +56,23 @@ De opdracht heeft twee delen:
 #### Juiste oplossingen
 
 * Random:
-
 sluit een willekeurig huis aan een willekeurige batterij
 * Greedy:
-
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit
 * Hillclimber (bordurend op Random en Greedy):
-
 verbetert de voornoemde twee algoritmes door twee willekeurige huizen van twee willekeurige batterijen te wisselen, controlerend of er een verbetering mogelijk is
 * Shared_Greedy:
-
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 * Diamond:
-
 sluit alle dichtstbijzijndste huizen aan de buitenste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 
 #### Toestandsruimte
 
 * Kostenbovergrens:
-
 sluit een willekeurig huis aan een verste batterij (mogelijk voor gedeelde en niet gedeelde gevallen), geen rekening houdend met resterende capaciteit
 * Kostenondergrens als kabels niet gedeeld zijn:
-
 sluit een willekeurig huis aan een dichtstbijzijndste batterij voor het niet-gedeelde geval, geen rekening houdend met resterende capaciteit
 * Kostenondergrens als kabels gedeeld zijn:
-
 sluit een willekeurig huis aan een dichtstbijzijndste batterij voor het gedeelde geval, geen rekening houdend met resterende capaciteit
 
 
