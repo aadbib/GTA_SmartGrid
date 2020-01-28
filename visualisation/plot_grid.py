@@ -50,22 +50,23 @@ def draw(grid):
         houses = battery.get_houses()
         colors = ["cyan", "magenta", "green", "yellow", "red"]
 
+        # Laadt locatie huizen en maak een image
         for house in houses:
             house_x = int(house.get_location()[0])
             house_y = int(house.get_location()[1])
-
             photo_house = mpimg.imread(f'{root_path}/images/huis_mini_mini.png')
             imagebox = OffsetImage(photo_house, zoom=1)
             addition_photo = AnnotationBbox(imagebox, (house_x, house_y), frameon=False)
             ax.add_artist(addition_photo)
-
             cables = house.get_cables()
+
+            # Teken de kabels van de huizen met kleuren
             for index, cable in enumerate(cables):
                 try:
                     # https://stackoverflow.com/questions/36470343/how-to-draw-a-line-with-matplotlib
-                    #           x1, x2    y1, y2
-                    # x1, y1 = [20, 20], [21, 20]
-                    # x2, y2 = [22, 20], [21, 20]
+                    # Werking:     x1, x2    y1, y2
+                    #    x1, y1 = [20, 20], [21, 20]
+                    #    x2, y2 = [22, 20], [21, 20]
 
                     cable1, cable2 = list(cable), list(cables[index + 1])
                     dashes = {"red":-0.1, "yellow":-0.05, "green":0, "cyan":0.05, "magenta":0.1}
