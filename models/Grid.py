@@ -21,7 +21,6 @@ class Grid:
         self.ending_y = 50
         self.load_objects(house_file, battery_file)
 
-
     def load_objects(self, *argv):
         """Laadt huis en batterij objecten van bestanden"""
 

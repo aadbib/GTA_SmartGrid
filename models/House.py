@@ -53,23 +53,21 @@ class House:
         house_y = int(self.__location[1])
 
         if house_cable_distance_y > 0:
-
             for movement in range(abs(house_cable_distance_y)):
                 self.set_cables((cable_x, cable_y + movement))
                 battery.set_unique_cable((cable_x, cable_y + movement))
-        else:
 
+        else:
             for movement in range(abs(house_cable_distance_y)):
                 self.set_cables((cable_x, cable_y - movement))
                 battery.set_unique_cable((cable_x, cable_y - movement))
 
         if house_cable_distance_x > 0:
-
             for movement in range(abs(house_cable_distance_x) + 1):
                 self.set_cables((cable_x + movement, house_y))
                 battery.set_unique_cable((cable_x + movement, house_y))
-        else:
 
+        else:
             for movement in range(abs(house_cable_distance_x) + 1):
                 self.set_cables((cable_x - movement, house_y))
                 battery.set_unique_cable((cable_x - movement, house_y))
@@ -79,13 +77,12 @@ class House:
         json_dict = {}
         json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'
         json_dict["output"] = self.__output
-
         cables_json = []
+
         for cable in self.__cables:
             cables_json.append(f"({cable[0]},{cable[1]})")
 
         json_dict["cables"] = cables_json
-
         return json_dict
 
     # toString()
