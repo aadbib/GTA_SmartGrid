@@ -1,4 +1,3 @@
-# Importeer libraries
 from functions.random import randomize_objects
 from functions.find import find_worst_battery
 

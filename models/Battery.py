@@ -72,6 +72,8 @@ class Battery:
         return ((len(self.__unique_cables) - 1) * Battery.price_cable) + Battery.battery_price
 
     def lay_cable_to_house(self, house):
+        """Legt kabels van huis naar batterij"""
+
         distance_y = int(self.__location[1]) - int(house.get_location()[1])
         distance_x = int(self.__location[0]) - int(house.get_location()[0])
         house_y = int(house.get_location()[1])
@@ -102,8 +104,10 @@ class Battery:
 
         self.set_house(house)
 
-    # Functie: Zet gegevens om in JSON-formaat
+
     def dictify(self):
+        """Zet gegevens om in JSON-formaat"""
+
         json_dict = {}
         json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'
         json_dict["capacity"] = self.__capacity

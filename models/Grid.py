@@ -1,8 +1,7 @@
-# Importeer libraries
+import json
 import csv
 from .House import House
 from .Battery import Battery
-import json
 
 class Grid:
 
@@ -22,8 +21,9 @@ class Grid:
         self.ending_y = 50
         self.load_objects(house_file, battery_file)
 
-    # Functie: Laadt huis en batterij objecten van bestanden
+
     def load_objects(self, *argv):
+        """Laadt huis en batterij objecten van bestanden"""
 
         # Open bestanden en maak een reader
         houses_neighbourhood = open(argv[0])
@@ -91,8 +91,9 @@ class Grid:
     def set_segment(self, segment):
         self.__segmenten.append(segment)
 
-    # Functie: Zet gegevens om in JSON-formaat en schrijf naar een bestand
     def write_output(self, file):
+        """Zet gegevens om in JSON-formaat en schrijf naar een bestand"""
+
         json_file = open(file, 'w')
         json_output = []
 
@@ -102,7 +103,6 @@ class Grid:
             json_output.append(info)
 
         json_file.write(json.dumps(json_output, indent=2))
-
 
     # toString()
     def __str__(self):

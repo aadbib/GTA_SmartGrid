@@ -1,21 +1,20 @@
-# Importeer libraries
+import os
+import sys
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.lines as mlines
-from matplotlib.offsetbox import TextArea, DrawingArea, AnnotationBbox, OffsetImage
-import numpy as np
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from models.Grid import Grid
-import os
-import sys
 
 # Zet root-pad goed om de modules vanaf CLI te laden
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 root_path = os.path.dirname(os.getcwd())
 sys.path.append(root_path)
 
-# Functie: tekent grid
-# Todo: teken de lijnen die in de batterijen ligt, want dat zijn de unieke kabels
 def draw(grid):
+    """Functie die een weergave van een grid geeft"""
+
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
 
     # Stop batterijen in variabele

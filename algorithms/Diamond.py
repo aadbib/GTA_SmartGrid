@@ -1,4 +1,3 @@
-# Importeer libraries
 from copy import deepcopy
 from functions.find import find_house
 from functions.segmenting import segmenting_grid
@@ -13,6 +12,7 @@ class Diamond:
             Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit,
             waarbij de output in de capaciteit past
         """
+
         houses = grid.get_houses()
         batteries = grid.get_batteries()
         houses_copy = deepcopy(houses)
@@ -37,7 +37,8 @@ class Diamond:
     @staticmethod
     def diamond_sorting_batteries(grid):
         """
-            Algoritme die de batterijen sorteert, zodat batterijen op een diamante manier aangesloten worden
+            Algoritme die de batterijen sorteert,
+            zodat batterijen op een diamante manier aangesloten worden
         """
 
         segment_order = [0, 20, 24, 4, 1, 5, 15, 21, 23, 19, 9, 3, 2, 6, 10, 16, 22, 18, 14, 8, 7, 11, 17, 13, 12]
