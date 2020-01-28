@@ -53,7 +53,7 @@ De opdracht heeft twee delen:
 * Grid: stelt een grid-object op met alle huizen en batterijen erin.
 
 ### Algoritmes
-#### Oplossingsalgoritmes
+#### Juiste oplossingen
 
 * Random:
 sluit een willekeurig huis aan een willekeurige batterij
@@ -66,7 +66,7 @@ sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende ca
 * Diamond:
 sluit alle dichtstbijzijndste huizen aan de buitenste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 
-#### Toestandsruimtealgoritmes
+#### Toestandsruimte
 
 * Kostenbovergrens:
 sluit een willekeurig huis aan een verste batterij (mogelijk voor gedeelde en niet gedeelde gevallen), geen rekening houdend met resterende capaciteit
