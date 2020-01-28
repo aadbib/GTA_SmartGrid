@@ -47,10 +47,10 @@ De opdracht heeft twee delen:
 
 ### Klassen
 
-* House: stelt een huis-object op aan de hand van ingelade locatie en output. De aangesloten kabels zijn opgeslagen als een "instance" hiervan.
-* Battery: stelt een batterij-object op aan de hand van ingelade locatie en capaciteit. De huizen die aan een bepaalde batterij verbonden zijn, worden als "instance" opgeslagen.
-* Segment: stelt een segment-object op aan de hand van start- en eind-coördinaten. Wordt gebruikt bij Diamond-algoritme met een batterij als een "instance".
-* Grid: stelt een grid-object op met alle huizen en batterijen erin.
+* **House**: stelt een huis-object op aan de hand van ingelade locatie en output. De aangesloten kabels zijn opgeslagen als een "instance" hiervan.
+* **Battery**: stelt een batterij-object op aan de hand van ingelade locatie en capaciteit. De huizen die aan een bepaalde batterij verbonden zijn, worden als "instance" opgeslagen.
+* **Segment**: stelt een segment-object op aan de hand van start- en eind-coördinaten. Wordt gebruikt bij Diamond-algoritme met een batterij als een "instance".
+* **Grid**: stelt een grid-object op met alle huizen en batterijen erin.
 
 ### Algoritmes
 #### Juiste oplossingen
