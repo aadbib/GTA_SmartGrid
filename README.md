@@ -1,4 +1,4 @@
-# GTA_SmartGrid NOG NIET AF
+# GTA_SmartGrid
 
 Project programmeertheorie minor prog
 
