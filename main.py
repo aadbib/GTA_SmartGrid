@@ -12,6 +12,7 @@ from visualisation.plot_grid import draw
 # Variabele die functie-referenties van de algoritmen opslaan
 random_algorithm = Random.rand_one_to_one_algorithm
 greedy_no_shared = Greedy.dist_cap_algorithm
+switch_up = Greedy.switch_up
 greedy_shared = Greedy.rand_cable_dist_cap
 best_no_shared_restrict_off = Best.best_dist_no_capacity_restrictions
 best_shared_restrict_off = Best.best_dist_no_cap_shared_cable
@@ -36,7 +37,7 @@ def main():
 
     sys_algorithm = sys.argv[2]
 
-    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7']:
+    if sys_algorithm not in ['1', '2', '3', '4', '5', '6', '7', '8']:
         print("No such algorithm!")
         exit(1)
 
@@ -55,7 +56,8 @@ def main():
         '4': worst_algorithm,
         '5': best_no_shared_restrict_off,
         '6': best_shared_restrict_off,
-        '7': diamond_algorithm
+        '7': switch_up,
+        '8': diamond_algorithm
     }
     algorithm = algorithms[sys_algorithm]
 
@@ -67,6 +69,7 @@ def main():
         worst_algorithm: [True, False],
         best_no_shared_restrict_off: False,
         best_shared_restrict_off: True,
+        switch_up: False,
         diamond_algorithm: True
     }
 

@@ -1,5 +1,6 @@
 from functions.random import randomize_objects
 from functions.find import find_battery, find_house
+from copy import deepcopy
 
 class Greedy:
     "Greedy algoritmen"
@@ -65,3 +66,28 @@ class Greedy:
 
             else:
                 battery.lay_cable_to_house(house)
+
+    @staticmethod
+    def switch_up(grid):
+        """
+            Algoritme die 'random' de batterijen aan de zo dichtbijzijnste huizen aansluit,
+            waarbij de output in de capaciteit past
+        """
+
+        # Verkrijg huizen en batterijen, schud ze, en pak kopie van huizen
+        houses = grid.get_houses()
+        batteries = grid.get_batteries()
+        randomize_objects(houses, batteries)
+        houses_copy = deepcopy(houses)
+
+        for battery in batteries:
+
+            # Batterij blijft huizen toevoegen tot find_house niks returned, oftewel batterij vol
+            while True:
+                house = find_house(battery, houses_copy)
+
+                if house:
+                    battery.lay_cable_to_house(house)
+
+                else:
+                    break

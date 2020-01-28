@@ -8,7 +8,6 @@ def find_house(battery, houses):
 
     for index, house in enumerate(houses):
         output_house = house.get_output()
-
         distance_house = house.distance(battery)
 
         if distance_house < min_distance:
