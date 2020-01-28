@@ -1,12 +1,11 @@
-# Importeer libraries
 from copy import deepcopy
 from models.Segment import Segment
 
 def segmenting_grid(grid):
     """
-    Functie om segmenten uit een grid te maken
-    Een segment bestaat uit 10 x 10
-    Totaal segmenten: 25
+        Functie om segmenten uit een grid te maken
+        Een segment bestaat uit 10 x 10
+        Totaal segmenten: 25
     """
 
     starting_x = 0

@@ -1,10 +1,8 @@
-# Importeer libraries
+import json
 import csv
 from .House import House
 from .Battery import Battery
-import json
 
-# Model Grid
 class Grid:
 
     # Statische attributen
@@ -13,6 +11,7 @@ class Grid:
     start_axis = -1
     end_axis = 52
 
+    # Constructor & attributen
     def __init__(self, neighbourhood, house_file, battery_file):
         self.__neighbourhood = neighbourhood
         self.__segmenten = []
@@ -22,12 +21,13 @@ class Grid:
         self.ending_y = 50
         self.load_objects(house_file, battery_file)
 
-    def load_objects(self, *argv):
 
+    def load_objects(self, *argv):
+        """Laadt huis en batterij objecten van bestanden"""
+
+        # Open bestanden en maak een reader
         houses_neighbourhood = open(argv[0])
         batteries_neighbourhood = open(argv[1])
-
-        # DictReader
         reader = csv.DictReader(houses_neighbourhood)
 
         # Loop door csv-reader, maak huis-objecten aan
@@ -45,6 +45,7 @@ class Grid:
 
         batteries_neighbourhood.close()
 
+    # Getters & setters
     def get_total_price(self):
         final_price = 0
 
@@ -91,6 +92,8 @@ class Grid:
         self.__segmenten.append(segment)
 
     def write_output(self, file):
+        """Zet gegevens om in JSON-formaat en schrijf naar een bestand"""
+
         json_file = open(file, 'w')
         json_output = []
 
@@ -100,7 +103,6 @@ class Grid:
             json_output.append(info)
 
         json_file.write(json.dumps(json_output, indent=2))
-
 
     # toString()
     def __str__(self):

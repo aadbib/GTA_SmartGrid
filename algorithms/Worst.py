@@ -1,17 +1,13 @@
-# Importeer libraries
 from functions.random import randomize_objects
 from functions.find import find_worst_battery
 
 class Worst:
-    """
-    Slechtste scenario algoritme
-    """
+    """Slechtste scenario algoritme"""
 
     @staticmethod
     def worst_dist_no_capacity_restrictions(grid):
-        """
-        Algoritme die de slechtse batterij voor een huis linkt
-        """
+        """Algoritme die de slechtse batterij voor een huis linkt"""
+
         houses = grid.get_houses()
         batteries = grid.get_batteries()
         for house in houses:
@@ -21,57 +17,39 @@ class Worst:
     @staticmethod
     def worst_dist_no_cap_shared_cable(grid):
         """
-        Algoritme die ook naar bestaande gelegde kabels kijkt, en de de kabel/batterij kiest met minste afstand
+            Algoritme die ook naar bestaande gelegde kabels kijkt,
+            en de de kabel/batterij kiest met minste afstand
         """
+
+        # Verkrijg batterijen en huizen en schud ze
         houses = grid.get_houses()
         batteries = grid.get_batteries()
-
         randomize_objects(houses, batteries)
 
-        # Voor huis in huizen
         for house in houses:
 
-            # Zoek de slechtste batterij
+            # Zoek de slechtste batterij, bereken afstand met huis en houd gegevens bij
             battery = find_worst_battery(batteries, house)
-
-            # Bereken de afstand tussen de slechtste batterij en huis
             distance_battery = house.distance(battery)
-
-            # Base-line afstand kabel (Upper-bound)
             worst_distance_cable = 0
-
-            # Declaratie slechtste kabel
             worst_cable = tuple
 
-            # Loop door de batterijen array
             for b in batteries:
-
-                # Pak de unieke kabels die aan de batterij is aangesloten
                 cables = b.get_unique_cables()
 
-                # Loop door deze unieke kabels
                 for c in cables:
                     distance_cable = house.distance(c)
 
-                    # Als de afstand van de kabel meer is dan de slechtste afstand die geconstateerd is
+                    # Als het kan, wijzig slechtste kabel en afstand en onthoud gegevens
                     if distance_cable > worst_distance_cable:
-
-                        # Zet dan dan deze kabel als de slechtste
                         worst_distance_cable = distance_cable
-
-                        # Onthoud de tuple/locatie van deze kabel
                         worst_cable = c
-
-                        # Onthoud van welke batterij deze kabel komt
                         battery_cable = b
 
-            # Als de afstand van deze kabel verder ligt dan de afstand van de verste batterij
+            # Conditie: controleer afstand batterij en kabel, en selecteert minste afstand
             if worst_distance_cable > distance_battery:
                 battery_cable.set_house(house)
-
-                # Leg kabel vanuit huis naar deze verste kabel
                 house.lay_cable_to_cable(worst_cable, battery_cable)
 
-            # Anders sluit aan de verste batterij
             else:
                 battery.lay_cable_to_house(house)

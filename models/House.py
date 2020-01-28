@@ -74,6 +74,7 @@ class House:
                 self.set_cables((cable_x - movement, house_y))
                 battery.set_unique_cable((cable_x - movement, house_y))
 
+    # Functie: Zet gegevens om in JSON-formaat
     def dictify(self):
         json_dict = {}
         json_dict["location"] = f'{self.__location[0]},{self.__location[1]}'
