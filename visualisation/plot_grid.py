@@ -17,10 +17,8 @@ def draw(grid):
 
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
 
-    # Stop batterijen in variabele
+    # Creëer een base-line figuur
     batteries = grid.get_batteries()
-
-    # Creëer een figure en daarin een plot
     fig = plt.figure()
     ax = fig.add_subplot(Grid.small_steps, Grid.small_steps, Grid.small_steps)
 
@@ -34,8 +32,7 @@ def draw(grid):
     ax.set_yticks(big_lines, Grid.small_steps)
     ax.set_yticks(small_lines, minor=True)
 
-    # Maak een grid van deze multidimensional array
-    # Alpha is alleen transparency
+    # Maak een grid van deze 2D array
     ax.grid(which='major', alpha=10, linewidth=2)
     ax.grid(which='minor', alpha=0)
 
@@ -86,6 +83,4 @@ def draw(grid):
 
                 except IndexError:
                     pass
-
-    # Toon de plot
     plt.show()
