@@ -1,4 +1,4 @@
-# GTA_SmartGrid NOG NIET AF
+# GTA_SmartGrid
 
 Project programmeertheorie minor prog
 
@@ -8,7 +8,7 @@ Groene energie is de energie van de toekomst, en zelf produceren is de mode van 
 ### Vereisten
 Alle code is geschreven in Python 3.7. Om een wijkrooster te kunnen tekenen moet er mathplotlib bibliotheek geïnstalleerd worden. Alle uitleg daarover bevindt zich in requirements.txt. Hierbij een korte instructie:
 
-> pip install -r requirements.txt
+>pip install -r requirements.txt
 
 ### Gebruik
 Het programma wordt gestart door het volgende aan te roepen:
@@ -38,7 +38,7 @@ Waarbij:
     * **/GTA_SmartGrid/visualisation:** bevat de code voor de visualisatie
 
 
-## Opdracht
+### Opdracht
 
 De batterijen kosten 5000 per stuk. De kabels kosten 9 per grid-segment. De kabels liggen op de gridlijnen, mogen ook gridpunten met een huis passeren, en de afstand van een huis tot een batterij wordt berekend volgens de manhattan distance.
 Er moet dus een netwerk aangelegd worden dat alle huizen verbindt aan een batterij en de kosten zo minimaal mogelijk laat zijn.
@@ -46,32 +46,43 @@ De opdracht heeft twee delen:
 * zonder kabels delen
 * kabels kunnen gedeeld worden: meerdere huizen kunnen via 1 kabel verbonden worden
 
-## Klassen
+### Klassen
 
-* House: stelt een huis-object op aan de hand van ingelade locatie en output. De aangesloten kabels zijn opgeslagen als een "instance" hiervan.
-* Battery: stelt een batterij-object op aan de hand van ingelade locatie en capaciteit. De huizen die aan een bepaalde batterij verbonden zijn, worden als "instance" opgeslagen.
-* Segment: stelt een segment-object op aan de hand van start- en eind-coördinaten. Wordt gebruikt bij Diamond-algoritme met een batterij als een "instance".
-* Grid: stelt een grid-object op met alle huizen en batterijen erin.
+* **House**: stelt een huis-object op aan de hand van ingelade locatie en output. De aangesloten kabels zijn opgeslagen als een "instance" hiervan.
+* **Battery**: stelt een batterij-object op aan de hand van ingelade locatie en capaciteit. De huizen die aan een bepaalde batterij verbonden zijn, worden als "instance" opgeslagen.
+* **Segment**: stelt een segment-object op aan de hand van start- en eind-coördinaten. Wordt gebruikt bij Diamond-algoritme met een batterij als een "instance".
+* **Grid**: stelt een grid-object op met alle huizen en batterijen erin.
 
-## Algoritmen
+### Algoritmes
+#### Juiste oplossingen
 
-* Random:
+* **Random**:
 sluit een willekeurig huis aan een willekeurige batterij
-* Greedy:
+* **Greedy**:
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit
-* Hillclimber (bordurend op Random en Greedy):
-verbetert de voornoemde twee algoritmen door twee willekeurige huizen van twee willekeurige batterijen te wisselen, controlerend of er een verbetering mogelijk is
-* Shared_Greedy:
+* **Hillclimber** (bordurend op Random en Greedy):
+verbetert de voornoemde twee algoritmes door twee willekeurige huizen van twee willekeurige batterijen te wisselen, controlerend of er een verbetering mogelijk is
+* **Shared_Greedy**:
 sluit een willekeurig huis aan een dichtstbijzijndste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
-* Diamond:
+* **Diamond**:
 sluit alle dichtstbijzijndste huizen aan de buitenste batterij met resterende capaciteit gegeven dat kabels gedeeld kunnen worden
 
-## Auteurs
+#### Toestandsruimte
+
+* **Kostenbovergrens**:
+sluit een willekeurig huis aan een verste batterij (mogelijk voor gedeelde en niet gedeelde gevallen), geen rekening houdend met resterende capaciteit
+* **Kostenondergrens als kabels niet gedeeld zijn**:
+sluit een willekeurig huis aan een dichtstbijzijndste batterij voor het niet-gedeelde geval, geen rekening houdend met resterende capaciteit
+* **Kostenondergrens als kabels gedeeld zijn**:
+sluit een willekeurig huis aan een dichtstbijzijndste batterij voor het gedeelde geval, geen rekening houdend met resterende capaciteit
+
+
+### Auteurs
 
 * George Soroko
 * Tom van Esseveld
 * Achraf Adbib
 
-## Dankbetuigingen
+### Dankbetuigingen
 
 Quinten van der Post voor advies en toezicht.
