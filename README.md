@@ -8,7 +8,7 @@ Groene energie is de energie van de toekomst, en zelf produceren is de mode van 
 ### Vereisten
 Alle code is geschreven in Python 3.7. Om een wijkrooster te kunnen tekenen moet er mathplotlib bibliotheek geïnstalleerd worden. Alle uitleg daarover bevindt zich in requirements.txt. Hierbij een korte instructie:
 
-` pip install -r requirements.txt `
+``` pip install -r requirements.txt ```
 
 ### Gebruik
 Het programma wordt gestart door het volgende aan te roepen:
