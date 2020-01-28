@@ -1,27 +1,24 @@
-# Importeer libraries
+import os
+import sys
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.lines as mlines
-from matplotlib.offsetbox import TextArea, DrawingArea, AnnotationBbox, OffsetImage
-import numpy as np
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from models.Grid import Grid
-import os
-import sys
 
 # Zet root-pad goed om de modules vanaf CLI te laden
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 root_path = os.path.dirname(os.getcwd())
 sys.path.append(root_path)
 
-# Functie: tekent grid
-# Todo: teken de lijnen die in de batterijen ligt, want dat zijn de unieke kabels
 def draw(grid):
+    """Functie die een weergave van een grid geeft"""
+
     # https://stackoverflow.com/questions/24943991/change-grid-interval-and-specify-tick-labels-in-matplotlib
 
-    # Stop batterijen in variabele
+    # Creëer een base-line figuur
     batteries = grid.get_batteries()
-
-    # Creëer een figure en daarin een plot
     fig = plt.figure()
     ax = fig.add_subplot(Grid.small_steps, Grid.small_steps, Grid.small_steps)
 
@@ -35,8 +32,7 @@ def draw(grid):
     ax.set_yticks(big_lines, Grid.small_steps)
     ax.set_yticks(small_lines, minor=True)
 
-    # Maak een grid van deze multidimensional array
-    # Alpha is alleen transparency
+    # Maak een grid van deze 2D array
     ax.grid(which='major', alpha=10, linewidth=2)
     ax.grid(which='minor', alpha=0)
 
@@ -87,6 +83,4 @@ def draw(grid):
 
                 except IndexError:
                     pass
-
-    # Toon de plot
     plt.show()

@@ -1,4 +1,3 @@
-# Importeer libraries
 from random import choice
 from functions.random import randomize_objects
 

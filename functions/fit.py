@@ -11,12 +11,10 @@ def fit_house_in_diamond(houses_copy, batteries):
     copy_batteries = deepcopy(batteries)
     copy_batteries.pop(0)
     battery_with_most_capacity = batteries[0]
-    capacity_battery_most = battery_with_most_capacity.get_remaining()
 
     # Blijf loopen, en huizen efficient verwisselen, tot het huis in de batterij past
-    for battery in copy_batteries:
-
-        second_most_battery_capacity = battery
+    for index, battery in enumerate(copy_batteries):
+        second_most_battery_capacity = batteries[index + 1]
         capacity_battery_second = second_most_battery_capacity.get_remaining()
 
         # Kijk naar de huizen in de eerst batterij en pak hoogste output
@@ -42,7 +40,6 @@ def fit_house_in_diamond(houses_copy, batteries):
                 second_index_house = index
                 least_remaining_battery_2 = remaining_battery_2
 
-        # Verwissel de huizen van de batterijen
         houses_first_battery.pop(house_first_index)
         second_house = houses_second_battery.pop(second_index_house)
         houses_first_battery.append(second_house)

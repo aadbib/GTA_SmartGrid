@@ -1,6 +1,7 @@
 def find_house(battery, houses):
     """
-    Zoekt het dichtstbijzijndste huis voor een gegeven batterij, waarbij de output in de resterende capaciteit past
+        Zoekt het dichtstbijzijndste huis voor een gegeven batterij,
+        waarbij de output in de resterende capaciteit past
     """
     optimal_index = None
     min_distance = 100
@@ -31,7 +32,8 @@ def find_house(battery, houses):
 
 def find_battery(batteries, house):
     """
-    Zoekt het dichtstbijzijndste batterij voor een gegeven huis, waarbij de output in de resterende capaciteit past
+        Zoekt het dichtstbijzijndste batterij voor een gegeven huis,
+        waarbij de output in de resterende capaciteit past
     """
     optimal_index = 0
     min_distance = 100
@@ -52,7 +54,8 @@ def find_battery(batteries, house):
 
 def find_best_battery(batteries, house):
     """
-    Zoekt de beste batterij voor een gegeven huis, waarbij de output niet uitmaakt
+        Zoekt de beste batterij voor een gegeven huis,
+        waarbij de output niet uitmaakt
     """
     optimal_index = 0
     min_distance = 101
@@ -73,7 +76,8 @@ def find_best_battery(batteries, house):
 
 def find_worst_battery(batteries, house):
     """
-    Zoekt de verste batterij voor een gegeven huis, waarbij de output niet uitmaakt
+        Zoekt de verste batterij voor een gegeven huis,
+        waarbij de output niet uitmaakt
     """
     worst_index = 0
     max_distance = 0
