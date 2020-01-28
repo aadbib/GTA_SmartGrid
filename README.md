@@ -12,7 +12,7 @@ Alle code is geschreven in Python 3.7. Om een wijkrooster te kunnen tekenen moet
 
 ### Gebruik
 Het programma wordt gestart door het volgende aan te roepen:
-|python main.py <"wijk"> <"algoritme"> <"pogingen">|
+`python main.py <"wijk"> <"algoritme"> <"pogingen">`
 
 Waarbij:
 * <"wijk"> staat voor het wijknummer (1, 2 of 3)
