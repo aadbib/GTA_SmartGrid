@@ -15,10 +15,10 @@ class Segment:
 
     # Getters & setters
     def get_starting_point(self):
-            return self.__starting_point
+        return self.__starting_point
 
     def get_end_point(self):
-            return self.__end_point
+        return self.__end_point
 
     def get_location_segment(self):
         return f'(x: {self.__starting_point[0]}-{self.__end_point[0]} y: {self.__starting_point[1]}-{self.__end_point[1]})'

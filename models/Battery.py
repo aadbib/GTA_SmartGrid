@@ -65,7 +65,6 @@ class Battery:
             total_price += house.calculate_price_cables()
 
         total_price += Battery.battery_price
-
         return total_price
 
     def unique_total_price(self):

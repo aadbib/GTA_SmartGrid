@@ -10,7 +10,6 @@ def segmenting_grid(grid):
 
     starting_x = 0
     starting_y = 0
-
     batteries = deepcopy(grid.get_batteries())
     grid.clear_batteries()
 
@@ -20,11 +19,9 @@ def segmenting_grid(grid):
     # Terwijl we nog niet het oppervlakte van een Grid hebben geraakt
     while starting_y < grid.ending_y:
         while starting_x < grid.ending_x:
-
             segment = Segment((starting_x, starting_y), (starting_x + Segment.x_size, starting_y + Segment.y_size))
 
             for battery in batteries:
-
                 battery_location = battery.get_location()
                 battery_x = int(battery_location[0])
                 battery_y = int(battery_location[1])
