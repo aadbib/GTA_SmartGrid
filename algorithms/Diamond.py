@@ -41,6 +41,7 @@ class Diamond:
             zodat batterijen op een diamante manier aangesloten worden
         """
 
+        # Bepaal diamant volgorde
         segment_order = [0, 20, 24, 4, 1, 5, 15, 21, 23, 19, 9, 3, 2, 6, 10, 16, 22, 18, 14, 8, 7, 11, 17, 13, 12]
         grid_segmenten = grid.get_segmenten()
 

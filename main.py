@@ -15,7 +15,6 @@ greedy_no_shared = Greedy.dist_cap_algorithm
 greedy_shared = Greedy.rand_cable_dist_cap
 best_no_shared_restrict_off = Best.best_dist_no_capacity_restrictions
 best_shared_restrict_off = Best.best_dist_no_cap_shared_cable
-greedy_bat_no_shared = Greedy.bat_dist_cap_algorithm
 worst_algorithm = Worst.worst_dist_no_capacity_restrictions
 diamond_algorithm = Diamond.diamond_dist_cap_cable
 hill_climber = Hillclimber.hill_climber_algorithm
